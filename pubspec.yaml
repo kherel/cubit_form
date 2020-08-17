@@ -1,0 +1,22 @@
+name: cubit_form
+description: Cubit Form
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^6.0.1
+  equatable: ^1.2.3
+  shortuuid: ^2.1.1
+
+dev_dependencies:
+  bloc_test: ^7.0.0
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
+
