@@ -28,8 +28,8 @@ Map<String, List<ValidationModel>> getFormSchema(
   return validationSchema;
 }
 
-class CubitFormCubit extends Cubit<CubitFormState> {
-  CubitFormCubit(
+class OldCubitFormCubit extends Cubit<OldCubitFormState> {
+  OldCubitFormCubit(
     List<OldCubitFormField> fields, {
     isCheckingOn = false,
     @required this.onSubmit,
@@ -61,7 +61,7 @@ class CubitFormCubit extends Cubit<CubitFormState> {
       var values = Map<String, dynamic>.from(state.values)
         ..addAll({fieldName: value});
 
-      emit(CubitFormState(
+      emit(OldCubitFormState(
         values: values,
         errors: errors,
       ));
@@ -69,7 +69,7 @@ class CubitFormCubit extends Cubit<CubitFormState> {
       var values = Map<String, dynamic>.from(state.values)
         ..addAll({fieldName: value});
 
-      emit(CubitFormState(
+      emit(OldCubitFormState(
         values: values,
         errors: state.errors,
       ));
@@ -100,18 +100,18 @@ class CubitFormCubit extends Cubit<CubitFormState> {
 
     var hasErrors = !errors.values.every((el) => el == null);
     if (hasErrors) {
-      emit(CubitFormState(
+      emit(OldCubitFormState(
         values: state.values,
         errors: errors,
       ));
     } else {
-      emit(CubitFormState(
+      emit(OldCubitFormState(
         isSubmiting: true,
         values: state.values,
         errors: errors,
       ));
       await onSubmit(state.values);
-      emit(CubitFormState(
+      emit(OldCubitFormState(
         isSubmiting: false,
         values: state.values,
         errors: errors,

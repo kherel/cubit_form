@@ -1,12 +1,12 @@
 part of 'cubit_form_cubit.dart';
 
-class CubitFormState extends Equatable {
+class OldCubitFormState extends Equatable {
   final Map<String, dynamic> values;
   final Map<String, String> errors;
   final isSubmiting;
   final hasSubmitted;
 
-  const CubitFormState({
+  const OldCubitFormState({
     @required this.values,
     @required this.errors,
     this.isSubmiting = false,
@@ -19,7 +19,7 @@ class CubitFormState extends Equatable {
   List<Object> get props => [values, errors, isSubmiting];
 }
 
-class InitialCubitFormState extends CubitFormState {
+class InitialCubitFormState extends OldCubitFormState {
   InitialCubitFormState({
     Map<String, dynamic> values,
   }) : super(

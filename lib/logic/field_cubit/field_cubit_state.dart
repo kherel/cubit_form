@@ -1,10 +1,10 @@
-part of 'form_field_cubit.dart';
+part of 'field_cubit.dart';
 
-class FormFieldState<T> extends Equatable {
-  const FormFieldState({
-    this.value,
-    this.error,
-    this.isErrorShown = false,
+class FieldCubitState<T> extends Equatable {
+  const FieldCubitState({
+    @required this.value,
+    @required this.error,
+    @required this.isErrorShown,
   });
 
   final T value;
@@ -17,12 +17,12 @@ class FormFieldState<T> extends Equatable {
   @override
   List<Object> get props => [value, error, isErrorShown];
 
-  FormFieldState<T> copyWith({
+  FieldCubitState<T> copyWith({
     T value,
     @required String error,
     bool isErrorShown,
   }) {
-    return FormFieldState(
+    return FieldCubitState(
       error: error,
       value: value ?? this.value,
       isErrorShown: isErrorShown ?? this.isErrorShown,

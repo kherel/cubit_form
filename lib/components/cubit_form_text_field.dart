@@ -1,3 +1,4 @@
+import 'package:cubit_form/logic/field_cubit/field_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -6,17 +7,17 @@ import 'cubit_form_field.dart';
 class CubitFormTextField extends StatelessWidget {
   const CubitFormTextField({
     Key key,
-    @required this.fieldName,
+    @required this.formFieldCubit,
     this.hintText,
   }) : super(key: key);
 
-  final String fieldName;
+  final FieldCubit formFieldCubit;
   final String hintText;
 
   @override
   Widget build(BuildContext context) {
     return CubitFormFieldWidget<String>(
-      formFieldName: fieldName,
+      formFieldCubit: formFieldCubit,
       builder: (context, {initalValue, error, onChange}) {
         return _TextFieldWithInitValue(
           initalValue,

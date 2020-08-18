@@ -1,5 +1,5 @@
 import 'package:cubit_form/cubit_form/field_model.dart';
-import 'package:cubit_form/logic/form_field/form_field_cubit.dart';
+import 'package:cubit_form/logic/field_cubit/field_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
@@ -8,7 +8,7 @@ void main() {
   var newValue = 'newValue';
 
   test("should set initial value", () async {
-    var cubit = FormFieldCubit<String>(initalValue: initialValue);
+    var cubit = FieldCubit<String>(initalValue: initialValue);
 
     expect(cubit.state.value, equals(initialValue));
     expect(cubit.state.error, equals(null));
@@ -17,24 +17,36 @@ void main() {
   });
 
   group('value group', () {
-    blocTest<FormFieldCubit<String>, FormFieldState<String>>(
+    blocTest<FieldCubit<String>, FieldCubitState<String>>(
       'should set value',
-      build: () => FormFieldCubit<String>(initalValue: initialValue),
-      act: (FormFieldCubit cubit) => cubit.setValue(newValue),
-      expect: <FormFieldState<String>>[
-        FormFieldState<String>(value: newValue),
+      build: () => FieldCubit<String>(initalValue: initialValue),
+      act: (FieldCubit cubit) => cubit.setValue(newValue),
+      expect: <FieldCubitState<String>>[
+        FieldCubitState<String>(
+          value: newValue,
+          error: null,
+          isErrorShown: false,
+        ),
       ],
     );
 
-    blocTest<FormFieldCubit<String>, FormFieldState<String>>(
+    blocTest<FieldCubit<String>, FieldCubitState<String>>(
       'should reset value',
-      build: () => FormFieldCubit<String>(initalValue: initialValue),
-      act: (FormFieldCubit cubit) => cubit
+      build: () => FieldCubit<String>(initalValue: initialValue),
+      act: (FieldCubit cubit) => cubit
         ..setValue(newValue)
         ..reset(),
-      expect: <FormFieldState<String>>[
-        FormFieldState<String>(value: newValue),
-        FormFieldState<String>(value: initialValue),
+      expect: <FieldCubitState<String>>[
+        FieldCubitState<String>(
+          value: newValue,
+          error: null,
+          isErrorShown: false,
+        ),
+        FieldCubitState<String>(
+          value: initialValue,
+          error: null,
+          isErrorShown: false,
+        ),
       ],
     );
   });
@@ -47,44 +59,56 @@ void main() {
     var error1 = 'error1';
     var error2 = 'error2';
 
-    blocTest<FormFieldCubit<String>, FormFieldState<String>>(
+    blocTest<FieldCubit<String>, FieldCubitState<String>>(
       'should validate',
-      build: () => FormFieldCubit<String>(
+      build: () => FieldCubit<String>(
         initalValue: initialValue,
         validations: [
           ValidationModel((val) => val == value1, error1),
           ValidationModel((val) => val == value2, error2),
         ],
       ),
-      act: (FormFieldCubit cubit) =>
+      act: (FieldCubit cubit) =>
           cubit..setValue(value1)..setValue(value2)..setValue(value3),
-      expect: <FormFieldState<String>>[
-        FormFieldState<String>(value: value1, error: error1),
-        FormFieldState<String>(value: value2, error: error2),
-        FormFieldState<String>(value: value3),
+      expect: <FieldCubitState<String>>[
+        FieldCubitState<String>(
+          value: value1,
+          error: error1,
+          isErrorShown: false,
+        ),
+        FieldCubitState<String>(
+          value: value2,
+          error: error2,
+          isErrorShown: false,
+        ),
+        FieldCubitState<String>(
+          value: value3,
+          error: null,
+          isErrorShown: false,
+        ),
       ],
     );
 
-    blocTest<FormFieldCubit<String>, FormFieldState<String>>(
+    blocTest<FieldCubit<String>, FieldCubitState<String>>(
       'should reset errors and isErrorShown after reset cubit',
-      build: () => FormFieldCubit<String>(
+      build: () => FieldCubit<String>(
         initalValue: initialValue,
         validations: [
           ValidationModel((val) => val == value1, error1),
         ],
       ),
-      act: (FormFieldCubit cubit) => cubit
+      act: (FieldCubit cubit) => cubit
         ..setValue(value1)
         ..showError()
         ..reset(),
       skip: 1,
-      expect: <FormFieldState<String>>[
-        FormFieldState<String>(
+      expect: <FieldCubitState<String>>[
+        FieldCubitState<String>(
           value: value1,
           error: error1,
           isErrorShown: true,
         ),
-        FormFieldState<String>(
+        FieldCubitState<String>(
           value: initialValue,
           error: null,
           isErrorShown: false,
@@ -92,14 +116,14 @@ void main() {
       ],
     );
 
-    blocTest<FormFieldCubit<String>, FormFieldState<String>>(
+    blocTest<FieldCubit<String>, FieldCubitState<String>>(
       'should emit state with isErrorShown true, when showError trigered',
-      build: () => FormFieldCubit<String>(
+      build: () => FieldCubit<String>(
         initalValue: initialValue,
       ),
-      act: (FormFieldCubit cubit) => cubit..showError(),
-      expect: <FormFieldState<String>>[
-        FormFieldState<String>(
+      act: (FieldCubit cubit) => cubit..showError(),
+      expect: <FieldCubitState<String>>[
+        FieldCubitState<String>(
           value: initialValue,
           error: null,
           isErrorShown: true,
@@ -107,22 +131,54 @@ void main() {
       ],
     );
   });
-
-  group('formFieldState', () {
-    test('should show isValid false if state has an error', () {
-      var state = FormFieldState(
-        error: 'error',
+  group('validation', () {
+    test("should have error, when initial value not valid", () async {
+      var cubit = FieldCubit<String>(
+        initalValue: initialValue,
+        validations: [
+          ValidationModel((val) => val == initialValue, 'error'),
+        ],
       );
 
-      expect(state.isValid, isFalse);
+      expect(cubit.state.error, equals('error'));
+      expect(cubit.state.isValid, isFalse);
     });
 
-    test('should show no shownError if isErrorShown is false', () {
-      var state = FormFieldState(
-        error: 'error',
+    test("should n't have error, when initial value is valid", () async {
+      var cubit = FieldCubit<String>(
+        initalValue: initialValue,
+        validations: [
+          ValidationModel((val) => val != initialValue, 'error'),
+        ],
       );
 
-      expect(state.shownError, isNull);
+      expect(cubit.state.error, isNull);
+      expect(cubit.state.isValid, isTrue);
     });
+
+    blocTest<FieldCubit<String>, FieldCubitState<String>>(
+      'should emit state with isErrorShown true, when showError trigered',
+      build: () => FieldCubit<String>(
+        initalValue: initialValue,
+        validations: [
+          ValidationModel((val) => val != 'value1', 'error1'),
+          ValidationModel((val) => val != 'value2', 'error2'),
+        ],
+      ),
+      act: (FieldCubit cubit) =>
+          cubit..setValue('value0')..setValue('value1'),
+      expect: <FieldCubitState<String>>[
+        FieldCubitState<String>(
+          value: 'value0',
+          error: 'error1',
+          isErrorShown: false,
+        ),
+        FieldCubitState<String>(
+          value: 'value1',
+          error: 'error2',
+          isErrorShown: false,
+        ),
+      ],
+    );
   });
 }
