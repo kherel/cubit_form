@@ -1,5 +1,4 @@
-import 'package:cubit_form/cubit_form/field_model.dart';
-import 'package:cubit_form/logic/field_cubit/field_cubit.dart';
+import 'package:cubit_form/cubit_form.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
@@ -165,8 +164,7 @@ void main() {
           ValidationModel((val) => val != 'value2', 'error2'),
         ],
       ),
-      act: (FieldCubit cubit) =>
-          cubit..setValue('value0')..setValue('value1'),
+      act: (FieldCubit cubit) => cubit..setValue('value0')..setValue('value1'),
       expect: <FieldCubitState<String>>[
         FieldCubitState<String>(
           value: 'value0',

@@ -1,5 +1,6 @@
-import 'package:cubit_form/logic/field_cubit/field_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../lib/cubit_form.dart';
 
 void main() {
   group('formFieldState', () {
