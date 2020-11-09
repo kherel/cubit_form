@@ -9,12 +9,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_bloc: ^6.0.1
-  equatable: ^1.2.3
+  flutter_bloc: ^6.1.0
+  equatable: ^1.2.5
   shortuuid: ^2.1.1
 
 dev_dependencies:
-  bloc_test: ^7.0.0
+  bloc_test: ^7.1.0
   flutter_test:
     sdk: flutter
 flutter:
