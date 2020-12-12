@@ -9,14 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_bloc: ^6.1.0
   equatable: ^1.2.5
+  flutter_bloc: ^6.1.1
   shortuuid: ^2.1.1
 
 dev_dependencies:
-  bloc_test: ^7.1.0
   flutter_test:
     sdk: flutter
+  bloc_test: ^7.1.0
 flutter:
   uses-material-design: true
-
