@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cubit_form/src/logic/models/validadation.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 
 part 'field_cubit_state.dart';
 

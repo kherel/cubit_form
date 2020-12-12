@@ -1,7 +1,7 @@
 name: cubit_form
 description: Cubit Form
-publish_to: 'none'
-version: 1.0.1
+version: 0.0.1
+homepage: https://github.com/kherel/cubit_form
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -12,6 +12,7 @@ dependencies:
   equatable: ^1.2.5
   flutter_bloc: ^6.1.1
   shortuuid: ^2.1.1
+  bloc: ^6.1.1
 
 dev_dependencies:
   flutter_test:
