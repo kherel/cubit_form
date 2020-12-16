@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:cubit_form/src/logic/models/validadation.dart';
+import 'package:cubit_form/src/logic/models/validation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 

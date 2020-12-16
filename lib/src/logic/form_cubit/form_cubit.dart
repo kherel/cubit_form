@@ -20,7 +20,6 @@ abstract class FormCubit extends Cubit<FormCubitState> {
 
   void setFields(List<FieldCubit> fields) {
     this.fields = fields;
-    print(fields);
     for (var c in fields) {
       c.listen((state) {
         validateForm();
@@ -46,7 +45,13 @@ abstract class FormCubit extends Cubit<FormCubitState> {
     if (state.isFormValid) {
       emit(state.copyWith(isSubmitting: true));
       await onSubmit();
-      emit(state.copyWith(isSubmitting: false, isSubmitted: true));
+      emit(state.copyWith(
+        isSubmitting: false,
+        isSubmitted: true,
+        isErrorShown: true,
+      ));
+    } else {
+      emit(state.copyWith(isErrorShown: true));
     }
 
     setShowErrorOnAllFields();

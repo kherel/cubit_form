@@ -1,22 +1,25 @@
+import 'package:cubit_form/cubit_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-
-import '../../cubit_form.dart';
-import 'cubit_form_field.dart';
 
 class CubitFormTextField extends StatelessWidget {
   const CubitFormTextField({
     Key key,
     @required this.formFieldCubit,
-    this.hintText,
-    this.labeText,
+    this.keyboardType,
+    this.decoration,
     this.obscureText = false,
+    this.inputFormatters,
+    this.scrollPadding,
   }) : super(key: key);
 
   final FieldCubit formFieldCubit;
-  final String hintText;
-  final String labeText;
+  final InputDecoration decoration;
+  final TextInputType keyboardType;
   final bool obscureText;
+  final List<TextInputFormatter> inputFormatters;
+  final EdgeInsets scrollPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +28,12 @@ class CubitFormTextField extends StatelessWidget {
       builder: (context, {initalValue, error, onChange}) {
         return _TextFieldWithInitValue(
           initalValue,
-          error,
           onChange,
-          hintText: hintText,
+          inputDecoration: decoration.copyWith(errorText: error),
           obscureText: obscureText,
+          keyboardType: keyboardType,
+          inputFormatters: inputFormatters,
+          scrollPadding: scrollPadding,
         );
       },
     );
@@ -38,20 +43,22 @@ class CubitFormTextField extends StatelessWidget {
 class _TextFieldWithInitValue extends StatefulWidget {
   const _TextFieldWithInitValue(
     this.initalValue,
-    this.error,
     this.onChange, {
-    this.hintText,
-    this.labeText,
+    this.inputDecoration,
     this.obscureText,
+    this.keyboardType,
+    this.inputFormatters,
+    this.scrollPadding,
     Key key,
   }) : super(key: key);
 
   final String initalValue;
-  final String error;
-  final String hintText;
-  final OnChange<String> onChange;
-  final String labeText;
+  final InputDecoration inputDecoration;
+  final ValueChanged<String> onChange;
   final bool obscureText;
+  final TextInputType keyboardType;
+  final List<TextInputFormatter> inputFormatters;
+  final EdgeInsets scrollPadding;
 
   @override
   _TextFieldWithInitValueState createState() => _TextFieldWithInitValueState();
@@ -72,13 +79,12 @@ class _TextFieldWithInitValueState extends State<_TextFieldWithInitValue> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType: widget.keyboardType,
       controller: controller,
       obscureText: widget.obscureText,
-      decoration: InputDecoration(
-        hintText: widget.hintText,
-        errorText: widget.error,
-        labelText: widget.labeText,
-      ),
+      decoration: widget.inputDecoration,
+      inputFormatters: widget.inputFormatters,
+      scrollPadding: widget.scrollPadding ?? EdgeInsets.all(20.0),
     );
   }
 }

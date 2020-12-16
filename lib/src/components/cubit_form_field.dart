@@ -1,12 +1,11 @@
+import 'package:cubit_form/cubit_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubit_form.dart';
 
 typedef FieldBuilder<T> = Widget Function(BuildContext context,
-    {T initalValue, String error, OnChange<T> onChange});
+    {T initalValue, String error, ValueChanged<T> onChange});
 
-typedef OnChange<T> = void Function(T value);
 
 class CubitFormFieldWidget<T> extends StatefulWidget {
   const CubitFormFieldWidget({
@@ -15,7 +14,7 @@ class CubitFormFieldWidget<T> extends StatefulWidget {
     @required this.builder,
   }) : super(key: key);
 
-  final FieldCubit formFieldCubit;
+  final FieldCubit<T> formFieldCubit;
   final FieldBuilder<T> builder;
 
   @override
@@ -41,7 +40,7 @@ class _CubitFormFieldWidgetState<T> extends State<CubitFormFieldWidget<T>> {
       builder: (context, state) {
         return widget.builder(
           context,
-          initalValue: fieldCubit.initalValue,
+          initalValue: fieldCubit.state.value,
           error: fieldCubit.state.shownError,
           onChange: fieldCubit.setValue,
         );

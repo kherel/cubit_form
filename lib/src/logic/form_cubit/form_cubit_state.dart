@@ -29,5 +29,6 @@ class FormCubitState extends Equatable {
   }
 
   @override
-  List<Object> get props => [isErrorShown, isFormValid];
+  List<Object> get props =>
+      [isErrorShown, isFormValid, isSubmitting, isSubmitted];
 }
