@@ -8,13 +8,20 @@ import 'package:flutter/widgets.dart';
 part 'form_cubit_state.dart';
 
 abstract class FormCubit extends Cubit<FormCubitState> {
-  FormCubit()
-      : super(FormCubitState(
-          isErrorShown: false,
-          isFormValid: false,
-          isSubmitted: false,
-          isSubmitting: false,
-        ));
+  FormCubit() : super(_initState);
+
+  static FormCubitState _initState = FormCubitState(
+    isErrorShown: false,
+    isFormValid: false,
+    isSubmitted: false,
+    isSubmitting: false,
+  );
+
+  void reset() {
+    for (var f in fields) {
+      f.reset();
+    }
+  }
 
   List<FieldCubit> fields;
 
@@ -45,16 +52,16 @@ abstract class FormCubit extends Cubit<FormCubitState> {
     if (state.isFormValid) {
       emit(state.copyWith(isSubmitting: true));
       await onSubmit();
+      reset();
       emit(state.copyWith(
         isSubmitting: false,
         isSubmitted: true,
-        isErrorShown: true,
+        isErrorShown: false,
       ));
     } else {
+      setShowErrorOnAllFields();
       emit(state.copyWith(isErrorShown: true));
     }
-
-    setShowErrorOnAllFields();
   }
 
   void setShowErrorOnAllFields() {

@@ -34,11 +34,7 @@ class Real extends FormCubit {
   @override
   void onSubmit() async {
     print('===start===');
-
     await Future.delayed(Duration(seconds: 2));
-
-    print(login.state.value);
-    print(password.state.value);
   }
 }
 

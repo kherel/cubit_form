@@ -18,37 +18,32 @@ class FieldCubit<T> extends Cubit<FieldCubitState<T>> {
   final T initalValue;
   final List<ValidationModel<T>> validations;
 
-  void setValue(T value) {
-    var error = tillfirstError<T>(value, validations);
+  void setValue(T value) => emit(
+        state.copyWith(
+          value: value,
+          error: tillfirstError<T>(value, validations),
+        ),
+      );
 
-    emit(
-      state.copyWith(
-        value: value,
-        error: error,
-      ),
-    );
-  }
+  void errorCheck() => emit(
+        state.copyWith(
+          error: tillfirstError<T>(state.value, validations),
+        ),
+      );
 
-  void errorCheck() {
-    var error = tillfirstError<T>(state.value, validations);
+  void showError() => emit(
+        state.copyWith(
+          isErrorShown: true,
+          error: state.error,
+        ),
+      );
 
-    emit(state.copyWith(error: error));
-  }
-
-  void showError() {
-    emit(state.copyWith(
-      isErrorShown: true,
-      error: state.error,
-    ));
-  }
-
-  void reset() {
-    var error = tillfirstError<T>(initalValue, validations);
-
-    emit(
-      FieldCubitState<T>(value: initalValue, error: error, isErrorShown: false),
-    );
-  }
+  void reset() => emit(
+        InitialFieldCubitState<T>(
+          initalValue: initalValue,
+          error: tillfirstError<T>(initalValue, validations),
+        ),
+      );
 }
 
 String tillfirstError<T>(T value, validations) {

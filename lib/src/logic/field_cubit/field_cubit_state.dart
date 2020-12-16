@@ -34,3 +34,8 @@ class FieldCubitState<T> extends Equatable {
     return 'value: $value, error: $error, isErrorShown: $isErrorShown';
   }
 }
+
+class InitialFieldCubitState<T> extends FieldCubitState<T> {
+  const InitialFieldCubitState({T initalValue, String error})
+      : super(value: initalValue, error: error, isErrorShown: false);
+}

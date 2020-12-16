@@ -1,6 +1,5 @@
 library cubit_form;
 
-export 'src/components/cubit_form_field.dart';
 export 'src/components/cubit_form_text_field.dart';
 
 export 'src/logic/field_cubit/field_cubit.dart';

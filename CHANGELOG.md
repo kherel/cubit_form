@@ -1,3 +1,6 @@
+## 0.0.7
+  - add reset functionality
+
 ## 0.0.6
   - fix
 
