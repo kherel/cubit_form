@@ -52,7 +52,6 @@ abstract class FormCubit extends Cubit<FormCubitState> {
     if (state.isFormValid) {
       emit(state.copyWith(isSubmitting: true));
       await onSubmit();
-      reset();
       emit(state.copyWith(
         isSubmitting: false,
         isSubmitted: true,
