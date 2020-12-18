@@ -1,6 +1,6 @@
 name: cubit_form
 description: Cubit Form
-version: 0.0.7
+version: 0.0.8
 homepage: https://github.com/kherel/cubit_form
 
 environment:
@@ -13,6 +13,7 @@ dependencies:
   email_validator: ^1.0.6
   equatable: ^1.2.5
   flutter_bloc: ^6.1.1
+  mask_text_input_formatter: ^1.1.0
   shortuuid: ^2.1.1
 
 dev_dependencies:

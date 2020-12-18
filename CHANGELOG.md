@@ -1,3 +1,6 @@
+## 0.0.8
+  - add phone field widget with phone mask
+
 ## 0.0.7
   - add reset functionality
 

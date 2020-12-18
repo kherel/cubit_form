@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cubit_form/cubit_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,13 +31,14 @@ class CubitFormTextField extends StatefulWidget {
 class CubitFormTextFieldState extends State<CubitFormTextField> {
   TextEditingController controller = TextEditingController();
 
+  StreamSubscription subscription;
   @override
   void initState() {
     controller = TextEditingController(text: widget.formFieldCubit.state.value)
       ..addListener(() {
         widget.formFieldCubit.setValue(controller.text);
       });
-    widget.formFieldCubit.listen(_cubitListener);
+    subscription = widget.formFieldCubit.listen(_cubitListener);
     super.initState();
   }
 
@@ -47,6 +50,7 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
 
   @override
   void dispose() {
+    subscription.cancel();
     controller.dispose();
     super.dispose();
   }
