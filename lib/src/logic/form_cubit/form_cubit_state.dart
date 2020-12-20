@@ -3,13 +3,13 @@ part of 'form_cubit.dart';
 class FormCubitState extends Equatable {
   const FormCubitState({
     @required this.isErrorShown,
-    @required this.isFormValid,
+    @required this.isFormDataValid,
     @required this.isSubmitting,
     @required this.isSubmitted,
   });
 
   final bool isErrorShown;
-  final bool isFormValid;
+  final bool isFormDataValid;
   final bool isSubmitting;
   final bool isSubmitted;
 
@@ -19,16 +19,18 @@ class FormCubitState extends Equatable {
     bool isSubmitting,
     bool isSubmitted,
   }) {
-    assert(isSubmitting != true || this.isFormValid);
+    assert(isSubmitting != true || this.isFormDataValid);
     return FormCubitState(
       isErrorShown: isErrorShown ?? this.isErrorShown,
-      isFormValid: isFormValid ?? this.isFormValid,
+      isFormDataValid: isFormValid ?? this.isFormDataValid,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSubmitted: isSubmitted ?? this.isSubmitted,
     );
   }
 
+  bool get hasErrorToShow => !isFormDataValid && isErrorShown;
+
   @override
   List<Object> get props =>
-      [isErrorShown, isFormValid, isSubmitting, isSubmitted];
+      [isErrorShown, isFormDataValid, isSubmitting, isSubmitted];
 }

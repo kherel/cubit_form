@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class CubitFormPhoneField extends StatefulWidget {
-  const CubitFormPhoneField({
+class CubitFormMaskedTextField extends StatefulWidget {
+  const CubitFormMaskedTextField({
     @required this.formFieldCubit,
     this.keyboardType,
     this.decoration,
@@ -26,10 +26,11 @@ class CubitFormPhoneField extends StatefulWidget {
   final EdgeInsets scrollPadding;
 
   @override
-  CubitFormPhoneFieldState createState() => CubitFormPhoneFieldState();
+  CubitFormMaskedTextFieldState createState() =>
+      CubitFormMaskedTextFieldState();
 }
 
-class CubitFormPhoneFieldState extends State<CubitFormPhoneField> {
+class CubitFormMaskedTextFieldState extends State<CubitFormMaskedTextField> {
   StreamSubscription subscription;
 
   @override

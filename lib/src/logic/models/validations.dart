@@ -41,3 +41,8 @@ class PhoneStringValidation extends ValidationModel<String> {
       : super((n) => n.replaceAll(RegExp(r'\D'), '').length != numberLength,
             errorText);
 }
+
+class RegExpValidation extends ValidationModel<String> {
+  RegExpValidation(RegExp regExp, String errorText)
+      : super((s) => !regExp.hasMatch(s), errorText);
+}

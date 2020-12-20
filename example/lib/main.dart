@@ -10,6 +10,7 @@ class Real extends FormCubit {
     login = FieldCubit<String>(
       initalValue: '',
       validations: [
+        RequiredStringValidation('required'),
         ValidationModel((value) => value.length < 3, 'too small'),
         ValidationModel((value) => value.length > 10, 'too big'),
       ],
@@ -20,6 +21,7 @@ class Real extends FormCubit {
     password = FieldCubit<String>(
       initalValue: '',
       validations: [
+        RequiredStringValidation('required'),
         ValidationModel((value) => value.length < 3, 'too small'),
         ValidationModel((value) => value == login.state.value, 'same as login'),
       ],
@@ -35,6 +37,12 @@ class Real extends FormCubit {
   void onSubmit() async {
     print('===start===');
     await Future.delayed(Duration(seconds: 2));
+    print(login.state.value);
+    print(password.state.value);
+
+    for (var f in fields) {
+      f.reset();
+    }
   }
 }
 
@@ -105,21 +113,19 @@ class _MyHomePageState extends State<MyHomePage> {
               BlocBuilder<Real, FormCubitState>(
                   cubit: formReal,
                   builder: (context, state) {
-                    print(state.isErrorShown);
-
-                    if (state.isFormValid || !state.isErrorShown) {
+                    if (state.hasErrorToShow) {
+                      return Center(
+                        child: _Error(
+                          child: Text('Not valid'),
+                        ),
+                      );
+                    } else {
                       return Center(
                         child: RaisedButton(
                           child:
                               Text(state.isSubmitting ? 'Submiting' : 'Submit'),
                           onPressed:
                               state.isSubmitting ? null : formReal.trySubmit,
-                        ),
-                      );
-                    } else {
-                      return Center(
-                        child: _Error(
-                          child: Text('Not valid'),
                         ),
                       );
                     }

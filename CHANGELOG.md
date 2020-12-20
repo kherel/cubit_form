@@ -1,3 +1,7 @@
+## 0.0.11
+  - add reg exp validation
+  - rename some variables
+  
 ## 0.0.10
   - fix
 
