@@ -14,6 +14,7 @@ class CubitFormMaskedTextField extends StatefulWidget {
     this.obscureText = false,
     this.maskFormatter,
     this.scrollPadding,
+    this.style,
     Key key,
   }) : super(key: key);
 
@@ -24,6 +25,7 @@ class CubitFormMaskedTextField extends StatefulWidget {
   final TextInputType keyboardType;
   final MaskTextInputFormatter maskFormatter;
   final EdgeInsets scrollPadding;
+  final TextStyle style;
 
   @override
   CubitFormMaskedTextFieldState createState() =>
@@ -56,6 +58,7 @@ class CubitFormMaskedTextFieldState extends State<CubitFormMaskedTextField> {
   @override
   Widget build(BuildContext context) {
     return CubitFormTextField(
+      style: widget.style ?? Theme.of(context).textTheme.subtitle1,
       formFieldCubit: widget.formFieldCubit,
       keyboardType: widget.keyboardType,
       decoration: widget.decoration,

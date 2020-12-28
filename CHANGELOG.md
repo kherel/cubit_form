@@ -1,3 +1,6 @@
+## 0.0.12
+  - update text 
+
 ## 0.0.11
   - add reg exp validation
   - rename some variables
