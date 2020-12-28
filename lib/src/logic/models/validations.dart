@@ -46,3 +46,12 @@ class RegExpValidation extends ValidationModel<String> {
   RegExpValidation(RegExp regExp, String errorText)
       : super((s) => !regExp.hasMatch(s), errorText);
 }
+
+class CombinedValidation<T> extends ValidationModel<T> {
+  CombinedValidation(CombinedTest test, ValidationModel<T> innerValidation)
+      : super((T value) => test() && innerValidation.test(value),
+            innerValidation.errorMassage);
+}
+
+typedef ValidationTest<T> = bool Function(T value);
+typedef CombinedTest = bool Function();

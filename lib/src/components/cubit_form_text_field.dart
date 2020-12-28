@@ -14,6 +14,8 @@ class CubitFormTextField extends StatefulWidget {
     this.inputFormatters,
     this.scrollPadding,
     this.style,
+    this.textAlign,
+    this.focusNode,
     Key key,
   }) : super(key: key);
 
@@ -24,6 +26,8 @@ class CubitFormTextField extends StatefulWidget {
   final List<TextInputFormatter> inputFormatters;
   final EdgeInsets scrollPadding;
   final TextStyle style;
+  final TextAlign textAlign;
+  final FocusNode focusNode;
 
   @override
   CubitFormTextFieldState createState() => CubitFormTextFieldState();
@@ -62,6 +66,8 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
         cubit: widget.formFieldCubit,
         builder: (context, state) {
           return TextField(
+            focusNode: widget.focusNode,
+            textAlign: widget.textAlign ?? TextAlign.left,
             style: widget.style ?? Theme.of(context).textTheme.subtitle1,
             keyboardType: widget.keyboardType,
             controller: controller,

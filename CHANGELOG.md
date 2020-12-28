@@ -1,3 +1,9 @@
+## 0.0.14
+  - add focus node
+
+## 0.0.13
+  - add text align
+
 ## 0.0.12
   - update text 
 
