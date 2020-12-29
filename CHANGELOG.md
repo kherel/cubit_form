@@ -1,3 +1,6 @@
+## 0.0.15
+  - add focus node
+
 ## 0.0.14
   - add focus node
 

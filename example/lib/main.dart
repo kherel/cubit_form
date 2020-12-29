@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cubit_form/cubit_form.dart';
 import 'package:flutter/material.dart';
 
@@ -43,6 +45,12 @@ class Real extends FormCubit {
     for (var f in fields) {
       f.reset();
     }
+  }
+
+  @override
+  FutureOr<bool> asyncValidation() {
+    login.setError('here async error');
+    return false;
   }
 }
 

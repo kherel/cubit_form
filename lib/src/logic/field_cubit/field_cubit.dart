@@ -25,6 +25,13 @@ class FieldCubit<T> extends Cubit<FieldCubitState<T>> {
         ),
       );
 
+  //for async validation
+  void setError(String error) => emit(
+        state.copyWith(
+          error: error,
+        ),
+      );
+
   void errorCheck() => emit(
         state.copyWith(
           error: tillfirstError<T>(state.value, validations),

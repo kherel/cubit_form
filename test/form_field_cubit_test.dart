@@ -30,7 +30,7 @@ void main() {
     );
 
     blocTest<FieldCubit<String>, FieldCubitState<String>>(
-      'should reset value',
+      'should reset value and set InitialFieldCubitState',
       build: () => FieldCubit<String>(initalValue: initialValue),
       act: (FieldCubit cubit) => cubit
         ..setValue(newValue)
@@ -41,10 +41,9 @@ void main() {
           error: null,
           isErrorShown: false,
         ),
-        FieldCubitState<String>(
-          value: initialValue,
+        InitialFieldCubitState<String>(
+          initalValue: initialValue,
           error: null,
-          isErrorShown: false,
         ),
       ],
     );
@@ -107,10 +106,9 @@ void main() {
           error: error1,
           isErrorShown: true,
         ),
-        FieldCubitState<String>(
-          value: initialValue,
+        InitialFieldCubitState<String>(
+          initalValue: initialValue,
           error: null,
-          isErrorShown: false,
         ),
       ],
     );

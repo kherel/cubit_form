@@ -48,15 +48,28 @@ abstract class FormCubit extends Cubit<FormCubitState> {
 
   FutureOr<void> onSubmit();
 
+  FutureOr<bool> asyncValidation() => true;
+
   void trySubmit() async {
     if (state.isFormDataValid) {
       emit(state.copyWith(isSubmitting: true));
-      await onSubmit();
-      emit(state.copyWith(
-        isSubmitting: false,
-        isSubmitted: true,
-        isErrorShown: false,
-      ));
+
+      var asyncValid = await asyncValidation();
+      if (asyncValid) {
+        await onSubmit();
+        emit(state.copyWith(
+          isSubmitting: false,
+          isSubmitted: true,
+          isErrorShown: false,
+        ));
+      } else {
+        setShowErrorOnAllFields();
+        emit(state.copyWith(
+          isSubmitting: false,
+          isErrorShown: true,
+          isFormValid: false,
+        ));
+      }
     } else {
       setShowErrorOnAllFields();
       emit(state.copyWith(isErrorShown: true));
