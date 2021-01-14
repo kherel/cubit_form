@@ -41,7 +41,9 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
   void initState() {
     controller = TextEditingController(text: widget.formFieldCubit.state.value)
       ..addListener(() {
-        widget.formFieldCubit.setValue(controller.text);
+        if (widget.formFieldCubit.state is! ExternalChangeFieldCubitState) {
+          widget.formFieldCubit.setValue(controller.text);
+        }
       });
     subscription = widget.formFieldCubit.listen(_cubitListener);
     super.initState();
@@ -50,6 +52,9 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
   void _cubitListener(FieldCubitState<String> state) {
     if (state is InitialFieldCubitState) {
       controller.clear();
+    }
+    if (state is ExternalChangeFieldCubitState) {
+      controller.text = state.value;
     }
   }
 

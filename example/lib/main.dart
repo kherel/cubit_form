@@ -28,12 +28,21 @@ class Real extends FormCubit {
         ValidationModel((value) => value == login.state.value, 'same as login'),
       ],
     );
-    var fields = [login, password];
+
+    string = FieldCubit<String>(
+      initalValue: 'aaa',
+      validations: [
+        RequiredStringValidation('required'),
+      ],
+    );
+    var fields = [login, password, string];
     super.setFields(fields);
   }
   FieldCubit login;
 
   FieldCubit password;
+
+  FieldCubit string;
 
   @override
   void onSubmit() async {
@@ -41,6 +50,7 @@ class Real extends FormCubit {
     await Future.delayed(Duration(seconds: 2));
     print(login.state.value);
     print(password.state.value);
+    print(string.state.value);
 
     for (var f in fields) {
       f.reset();
@@ -49,8 +59,12 @@ class Real extends FormCubit {
 
   @override
   FutureOr<bool> asyncValidation() {
-    login.setError('here async error');
-    return false;
+    // login.setError('here async error');
+    return true;
+  }
+
+  void setString() {
+    string.externalSetValue('bbb');
   }
 }
 
@@ -67,79 +81,81 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  Real formReal;
-
-  @override
-  void initState() {
-    formReal = Real();
-    super.initState();
-  }
-
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: BlocProvider<Real>(
-          create: (_) => formReal,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Text('''
+          create: (_) => Real(),
+          child: Builder(builder: (context) {
+            var realForm = context.watch<Real>();
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Text('''
   validation rules:
   - login must be longer than 3 symbols and shorter than 10
   - password must be longer than 3 symbols and not the same as login
-                '''),
-              ),
-              CubitFormTextField(
-                formFieldCubit: formReal.login,
-                decoration: InputDecoration(
-                  hintText: 'name',
-                  labelText: 'login',
+                    '''),
                 ),
-              ),
-              CubitFormTextField(
-                formFieldCubit: formReal.password,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'another text',
-                  labelText: 'password',
+                CubitFormTextField(
+                  formFieldCubit: realForm.login,
+                  decoration: InputDecoration(
+                    hintText: 'name',
+                    labelText: 'login',
+                  ),
                 ),
-              ),
-              BlocBuilder<Real, FormCubitState>(
-                  cubit: formReal,
-                  builder: (context, state) {
-                    if (state.hasErrorToShow) {
-                      return Center(
-                        child: _Error(
-                          child: Text('Not valid'),
+                CubitFormTextField(
+                  formFieldCubit: realForm.password,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'another text',
+                    labelText: 'password',
+                  ),
+                ),
+                CubitFormTextField(
+                  formFieldCubit: realForm.string,
+                  decoration: InputDecoration(
+                    hintText: 'another string',
+                    labelText: 'string',
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.refresh,
                         ),
-                      );
-                    } else {
-                      return Center(
-                        child: RaisedButton(
-                          child:
-                              Text(state.isSubmitting ? 'Submiting' : 'Submit'),
-                          onPressed:
-                              state.isSubmitting ? null : formReal.trySubmit,
-                        ),
-                      );
-                    }
-                  })
-            ],
-          ),
+                        onPressed: realForm.setString,
+                      ),
+                    ),
+                  ),
+                ),
+                BlocBuilder<Real, FormCubitState>(
+                    cubit: realForm,
+                    builder: (context, state) {
+                      if (state.hasErrorToShow) {
+                        return Center(
+                          child: _Error(
+                            child: Text('Not valid'),
+                          ),
+                        );
+                      } else {
+                        return Center(
+                          child: RaisedButton(
+                            child: Text(
+                                state.isSubmitting ? 'Submiting' : 'Submit'),
+                            onPressed:
+                                state.isSubmitting ? null : realForm.trySubmit,
+                          ),
+                        );
+                      }
+                    })
+              ],
+            );
+          }),
         ),
       ),
     );

@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:cubit_form/src/logic/models/validation.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
 part 'field_cubit_state.dart';
@@ -20,6 +19,13 @@ class FieldCubit<T> extends Cubit<FieldCubitState<T>> {
 
   void setValue(T value) => emit(
         state.copyWith(
+          value: value,
+          error: tillfirstError<T>(value, validations),
+        ),
+      );
+
+  void externalSetValue(T value) => emit(
+        state.externalChange(
           value: value,
           error: tillfirstError<T>(value, validations),
         ),
