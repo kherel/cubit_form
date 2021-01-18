@@ -118,6 +118,7 @@ class MyHomePage extends StatelessWidget {
                   ),
                 ),
                 CubitFormTextField(
+                  cursorColor: Colors.red,
                   formFieldCubit: realForm.string,
                   decoration: InputDecoration(
                     hintText: 'another string',
