@@ -7,12 +7,12 @@ void main() {
   var newValue = 'newValue';
 
   test("should set initial value", () async {
-    var cubit = FieldCubit<String>(initalValue: initialValue);
+    var state = FieldCubit<String>(initalValue: initialValue).state;
 
-    expect(cubit.state.value, equals(initialValue));
-    expect(cubit.state.error, equals(null));
-    expect(cubit.state.isErrorShown, equals(false));
-    expect(cubit.state.isValid, equals(true));
+    expect(state.value, equals(initialValue));
+    expect(state.error, equals(null));
+    expect(state.isErrorShown, equals(false));
+    expect(state.isValid, equals(true));
   });
 
   group('value group', () {
@@ -20,7 +20,7 @@ void main() {
       'should set value',
       build: () => FieldCubit<String>(initalValue: initialValue),
       act: (FieldCubit cubit) => cubit.setValue(newValue),
-      expect: <FieldCubitState<String>>[
+      expect: () => <FieldCubitState<String>>[
         FieldCubitState<String>(
           value: newValue,
           error: null,
@@ -35,7 +35,7 @@ void main() {
       act: (FieldCubit cubit) => cubit
         ..setValue(newValue)
         ..reset(),
-      expect: <FieldCubitState<String>>[
+      expect: () => <FieldCubitState<String>>[
         FieldCubitState<String>(
           value: newValue,
           error: null,
@@ -68,7 +68,7 @@ void main() {
       ),
       act: (FieldCubit cubit) =>
           cubit..setValue(value1)..setValue(value2)..setValue(value3),
-      expect: <FieldCubitState<String>>[
+      expect: () => <FieldCubitState<String>>[
         FieldCubitState<String>(
           value: value1,
           error: error1,
@@ -100,7 +100,7 @@ void main() {
         ..showError()
         ..reset(),
       skip: 1,
-      expect: <FieldCubitState<String>>[
+      expect: () => <FieldCubitState<String>>[
         FieldCubitState<String>(
           value: value1,
           error: error1,
@@ -119,7 +119,7 @@ void main() {
         initalValue: initialValue,
       ),
       act: (FieldCubit cubit) => cubit..showError(),
-      expect: <FieldCubitState<String>>[
+      expect: () => <FieldCubitState<String>>[
         FieldCubitState<String>(
           value: initialValue,
           error: null,
@@ -130,27 +130,27 @@ void main() {
   });
   group('validation', () {
     test("should have error, when initial value not valid", () async {
-      var cubit = FieldCubit<String>(
+      var state = FieldCubit<String>(
         initalValue: initialValue,
         validations: [
           ValidationModel((val) => val == initialValue, 'error'),
         ],
-      );
+      ).state;
 
-      expect(cubit.state.error, equals('error'));
-      expect(cubit.state.isValid, isFalse);
+      expect(state.error, equals('error'));
+      expect(state.isValid, isFalse);
     });
 
     test("should n't have error, when initial value is valid", () async {
-      var cubit = FieldCubit<String>(
+      var state = FieldCubit<String>(
         initalValue: initialValue,
         validations: [
           ValidationModel((val) => val != initialValue, 'error'),
         ],
-      );
+      ).state;
 
-      expect(cubit.state.error, isNull);
-      expect(cubit.state.isValid, isTrue);
+      expect(state.error, isNull);
+      expect(state.isValid, isTrue);
     });
 
     blocTest<FieldCubit<String>, FieldCubitState<String>>(
@@ -163,7 +163,7 @@ void main() {
         ],
       ),
       act: (FieldCubit cubit) => cubit..setValue('value0')..setValue('value1'),
-      expect: <FieldCubitState<String>>[
+      expect: () => <FieldCubitState<String>>[
         FieldCubitState<String>(
           value: 'value0',
           error: 'error1',
