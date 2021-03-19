@@ -8,7 +8,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CubitFormMaskedTextField extends StatefulWidget {
   const CubitFormMaskedTextField({
-    @required this.formFieldCubit,
+    required this.formFieldCubit,
     this.keyboardType,
     this.decoration,
     this.obscureText = false,
@@ -17,19 +17,21 @@ class CubitFormMaskedTextField extends StatefulWidget {
     this.style,
     this.textAlign,
     this.focusNode,
-    Key key,
+    this.cursorColor,
+    Key? key,
   }) : super(key: key);
 
   final FieldCubit<String> formFieldCubit;
 
-  final InputDecoration decoration;
+  final InputDecoration? decoration;
   final bool obscureText;
-  final TextInputType keyboardType;
-  final MaskTextInputFormatter maskFormatter;
-  final EdgeInsets scrollPadding;
-  final TextStyle style;
-  final TextAlign textAlign;
-  final FocusNode focusNode;
+  final TextInputType? keyboardType;
+  final MaskTextInputFormatter? maskFormatter;
+  final EdgeInsets? scrollPadding;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  final FocusNode? focusNode;
+  final Color? cursorColor;
 
   @override
   CubitFormMaskedTextFieldState createState() =>
@@ -37,7 +39,7 @@ class CubitFormMaskedTextField extends StatefulWidget {
 }
 
 class CubitFormMaskedTextFieldState extends State<CubitFormMaskedTextField> {
-  StreamSubscription subscription;
+  StreamSubscription? subscription;
 
   @override
   void initState() {
@@ -48,20 +50,21 @@ class CubitFormMaskedTextFieldState extends State<CubitFormMaskedTextField> {
   void _cubitListener(FieldCubitState<String> state) {
     if (state is InitialFieldCubitState) {
       if (widget.maskFormatter != null) {
-        widget.maskFormatter.clear();
+        widget.maskFormatter!.clear();
       }
     }
   }
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return CubitFormTextField(
+      cursorColor: widget.cursorColor,
       focusNode: widget.focusNode,
       textAlign: widget.textAlign ?? TextAlign.left,
       style: widget.style ?? Theme.of(context).textTheme.subtitle1,
@@ -69,7 +72,8 @@ class CubitFormMaskedTextFieldState extends State<CubitFormMaskedTextField> {
       keyboardType: widget.keyboardType,
       decoration: widget.decoration,
       obscureText: widget.obscureText,
-      inputFormatters: [widget.maskFormatter],
+      inputFormatters:
+          widget.maskFormatter != null ? [widget.maskFormatter!] : [],
       scrollPadding: widget.scrollPadding ?? EdgeInsets.all(20.0),
     );
   }

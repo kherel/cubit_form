@@ -4,7 +4,7 @@ class ValidationModel<T> {
 
   const ValidationModel(this.test, this.errorMassage);
 
-  String check(T val) {
+  String? check(T val) {
     return test(val) ? errorMassage : null;
   }
 }

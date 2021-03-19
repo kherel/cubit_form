@@ -2,10 +2,10 @@ part of 'form_cubit.dart';
 
 class FormCubitState extends Equatable {
   const FormCubitState({
-    @required this.isErrorShown,
-    @required this.isFormDataValid,
-    @required this.isSubmitting,
-    @required this.isSubmitted,
+    required this.isErrorShown,
+    required this.isFormDataValid,
+    required this.isSubmitting,
+    required this.isSubmitted,
   });
 
   final bool isErrorShown;
@@ -14,10 +14,10 @@ class FormCubitState extends Equatable {
   final bool isSubmitted;
 
   FormCubitState copyWith({
-    bool isErrorShown,
-    bool isFormValid,
-    bool isSubmitting,
-    bool isSubmitted,
+    bool? isErrorShown,
+    bool? isFormValid,
+    bool? isSubmitting,
+    bool? isSubmitted,
   }) {
     assert(isSubmitting != true || this.isFormDataValid);
     return FormCubitState(

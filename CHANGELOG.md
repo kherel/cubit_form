@@ -1,3 +1,15 @@
+## 1.0.1-nullsafety.0
+  - add max lines parameter
+
+## 1.0.0-nullsafety.0
+  - null-safety
+
+## 0.0.18
+  - add cursor color to mask text field
+
+## 0.0.17
+  - add cursor color
+
 ## 0.0.16
   - add external change
 

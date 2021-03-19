@@ -1,23 +1,23 @@
 part of 'field_cubit.dart';
 
-class FieldCubitState<T> {
+class FieldCubitState<T> extends Equatable {
   const FieldCubitState({
-    @required this.value,
-    @required this.error,
-    @required this.isErrorShown,
+    required this.value,
+    required this.error,
+    required this.isErrorShown,
   });
 
   final T value;
-  final String error;
+  final String? error;
   final bool isErrorShown;
 
   bool get isValid => error == null;
-  String get shownError => isErrorShown ? error : null;
+  String? get shownError => isErrorShown ? error : null;
 
   FieldCubitState<T> copyWith({
-    T value,
-    @required String error,
-    bool isErrorShown,
+    T? value,
+    String? error,
+    bool? isErrorShown,
   }) {
     return FieldCubitState(
       error: error,
@@ -27,13 +27,13 @@ class FieldCubitState<T> {
   }
 
   FieldCubitState<T> externalChange({
-    T value,
-    @required String error,
-    bool isErrorShown,
+    required T value,
+    required String? error,
+    bool? isErrorShown,
   }) {
     return ExternalChangeFieldCubitState(
       error: error,
-      value: value ?? this.value,
+      value: value,
       isErrorShown: isErrorShown ?? this.isErrorShown,
     );
   }
@@ -42,21 +42,30 @@ class FieldCubitState<T> {
   String toString() {
     return 'value: $value, error: $error, isErrorShown: $isErrorShown';
   }
+
+  @override
+  List<Object?> get props => [value, error, isErrorShown];
 }
 
 class InitialFieldCubitState<T> extends FieldCubitState<T> {
-  const InitialFieldCubitState({T initalValue, String error})
+  const InitialFieldCubitState({required T initalValue, String? error})
       : super(value: initalValue, error: error, isErrorShown: false);
+
+  @override
+  List<Object?> get props => [value, error, isErrorShown];
 }
 
 class ExternalChangeFieldCubitState<T> extends FieldCubitState<T> {
   const ExternalChangeFieldCubitState({
-    T value,
-    String error,
-    bool isErrorShown,
+    required T value,
+    String? error,
+    required bool isErrorShown,
   }) : super(
           value: value,
           error: error,
           isErrorShown: isErrorShown,
         );
+
+  @override
+  List<Object?> get props => [value, error, isErrorShown];
 }

@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 
 class CubitFormTextField extends StatefulWidget {
   const CubitFormTextField({
-    @required this.formFieldCubit,
+    required this.formFieldCubit,
     this.keyboardType,
     this.decoration,
     this.obscureText = false,
@@ -17,19 +17,21 @@ class CubitFormTextField extends StatefulWidget {
     this.textAlign,
     this.focusNode,
     this.cursorColor,
-    Key key,
+    this.maxLines = 1,
+    Key? key,
   }) : super(key: key);
 
   final FieldCubit<String> formFieldCubit;
-  final InputDecoration decoration;
+  final InputDecoration? decoration;
   final bool obscureText;
-  final TextInputType keyboardType;
-  final List<TextInputFormatter> inputFormatters;
-  final EdgeInsets scrollPadding;
-  final TextStyle style;
-  final TextAlign textAlign;
-  final FocusNode focusNode;
-  final Color cursorColor;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
+  final EdgeInsets? scrollPadding;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  final FocusNode? focusNode;
+  final Color? cursorColor;
+  final int maxLines;
 
   @override
   CubitFormTextFieldState createState() => CubitFormTextFieldState();
@@ -38,14 +40,12 @@ class CubitFormTextField extends StatefulWidget {
 class CubitFormTextFieldState extends State<CubitFormTextField> {
   TextEditingController controller = TextEditingController();
 
-  StreamSubscription subscription;
+  late StreamSubscription subscription;
   @override
   void initState() {
     controller = TextEditingController(text: widget.formFieldCubit.state.value)
       ..addListener(() {
-        if (widget.formFieldCubit.state is! ExternalChangeFieldCubitState) {
-          widget.formFieldCubit.setValue(controller.text);
-        }
+        widget.formFieldCubit.setValue(controller.text);
       });
     subscription = widget.formFieldCubit.listen(_cubitListener);
     super.initState();
@@ -57,6 +57,8 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
     }
     if (state is ExternalChangeFieldCubitState) {
       controller.text = state.value;
+      controller.selection = TextSelection.fromPosition(
+          TextPosition(offset: controller.text.length));
     }
   }
 
@@ -70,9 +72,10 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FieldCubit, FieldCubitState>(
-        cubit: widget.formFieldCubit,
+        bloc: widget.formFieldCubit,
         builder: (context, state) {
           return TextField(
+            maxLines: widget.maxLines,
             cursorColor: widget.cursorColor,
             focusNode: widget.focusNode,
             textAlign: widget.textAlign ?? TextAlign.left,
@@ -80,7 +83,7 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
             keyboardType: widget.keyboardType,
             controller: controller,
             obscureText: widget.obscureText,
-            decoration: widget.decoration.copyWith(
+            decoration: widget.decoration?.copyWith(
               errorText: state.isErrorShown ? state.error : null,
             ),
             inputFormatters: widget.inputFormatters,

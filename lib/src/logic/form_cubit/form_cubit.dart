@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:cubit_form/cubit_form.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart';
 
 part 'form_cubit_state.dart';
 
@@ -23,7 +22,14 @@ abstract class FormCubit extends Cubit<FormCubitState> {
     }
   }
 
-  List<FieldCubit> fields;
+  late List<FieldCubit> fields;
+
+  Future<void> close() async {
+    for (var f in fields) {
+      f.close();
+    }
+    await super.close();
+  }
 
   void setFields(List<FieldCubit> fields) {
     this.fields = fields;
