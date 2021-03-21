@@ -22,7 +22,7 @@ abstract class FormCubit extends Cubit<FormCubitState> {
     }
   }
 
-  late List<FieldCubit> fields;
+  final List<FieldCubit> fields = [];
 
   Future<void> close() async {
     for (var f in fields) {
@@ -31,10 +31,15 @@ abstract class FormCubit extends Cubit<FormCubitState> {
     await super.close();
   }
 
+  @Deprecated('Use addFields instead.')
   void setFields(List<FieldCubit> fields) {
-    this.fields = fields;
-    for (var c in fields) {
-      c.listen((state) {
+    addFields(fields);
+  }
+
+  void addFields(List<FieldCubit> newFields) {
+    this.fields.addAll(newFields);
+    for (var c in newFields) {
+      c.stream.listen((state) {
         validateForm();
       });
     }

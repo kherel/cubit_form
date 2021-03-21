@@ -7,7 +7,7 @@ void main() {
   runApp(MyApp());
 }
 
-class Real extends FormCubit {
+abstract class Real extends FormCubit {
   Real() : super() {
     login = FieldCubit<String>(
       initalValue: '',
@@ -16,7 +16,7 @@ class Real extends FormCubit {
         ValidationModel((value) => value.length < 3, 'too small'),
         ValidationModel((value) => value.length > 10, 'too big'),
       ],
-    )..listen((_) {
+    )..stream.listen((_) {
         password.errorCheck();
       });
 
@@ -29,21 +29,32 @@ class Real extends FormCubit {
       ],
     );
 
+    var fields = [login, password];
+    super.addFields(fields);
+  }
+  late FieldCubit<String> login;
+
+  late FieldCubit<String> password;
+
+  @override
+  FutureOr<bool> asyncValidation() {
+    // login.setError('here async error');
+    return true;
+  }
+}
+
+class RealChild extends Real {
+  RealChild() {
     string = FieldCubit<String>(
       initalValue: 'aaa',
       validations: [
         RequiredStringValidation('required'),
       ],
     );
-    var fields = [login, password, string];
-    super.setFields(fields);
+    var fields = [string];
+
+    super.addFields(fields);
   }
-  // ignore: close_sinks
-  late FieldCubit<String> login;
-
-  late FieldCubit<String> password;
-
-  late FieldCubit<String> string;
 
   @override
   void onSubmit() async {
@@ -58,15 +69,11 @@ class Real extends FormCubit {
     }
   }
 
-  @override
-  FutureOr<bool> asyncValidation() {
-    // login.setError('here async error');
-    return true;
-  }
-
   void setString() {
     string.externalSetValue('bbb');
   }
+
+  late FieldCubit<String> string;
 }
 
 class MyApp extends StatelessWidget {
@@ -87,9 +94,10 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocProvider<Real>(
-          create: (_) => Real(),
+        child: BlocProvider<RealChild>(
+          create: (_) => RealChild(),
           child: Builder(builder: (context) {
+            var formCubit = context.watch<RealChild>();
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -103,14 +111,14 @@ class MyHomePage extends StatelessWidget {
                     '''),
                 ),
                 CubitFormTextField(
-                  formFieldCubit: context.watch<Real>().login,
+                  formFieldCubit: formCubit.login,
                   decoration: InputDecoration(
                     hintText: 'name',
                     labelText: 'login',
                   ),
                 ),
                 CubitFormTextField(
-                  formFieldCubit: context.watch<Real>().password,
+                  formFieldCubit: formCubit.password,
                   obscureText: true,
                   decoration: InputDecoration(
                     hintText: 'another text',
@@ -119,7 +127,7 @@ class MyHomePage extends StatelessWidget {
                 ),
                 CubitFormTextField(
                   cursorColor: Colors.red,
-                  formFieldCubit: context.watch<Real>().string,
+                  formFieldCubit: formCubit.string,
                   decoration: InputDecoration(
                     hintText: 'another string',
                     labelText: 'string',
@@ -129,32 +137,28 @@ class MyHomePage extends StatelessWidget {
                         icon: Icon(
                           Icons.refresh,
                         ),
-                        onPressed: () => context.read<Real>().setString(),
+                        onPressed: () => formCubit.setString(),
                       ),
                     ),
                   ),
                 ),
-                BlocBuilder<Real, FormCubitState>(
-                    bloc: context.read<Real>(),
-                    builder: (context, state) {
-                      if (state.hasErrorToShow) {
-                        return Center(
-                          child: _Error(
-                            child: Text('Not valid'),
-                          ),
-                        );
-                      } else {
-                        return Center(
-                          child: ElevatedButton(
-                            child: Text(
-                                state.isSubmitting ? 'Submiting' : 'Submit'),
-                            onPressed: state.isSubmitting
-                                ? null
-                                : () => context.read<Real>().trySubmit(),
-                          ),
-                        );
-                      }
-                    })
+                if (formCubit.state.hasErrorToShow)
+                  Center(
+                    child: _Error(
+                      child: Text('Not valid'),
+                    ),
+                  ),
+                if (!formCubit.state.hasErrorToShow)
+                  Center(
+                    child: ElevatedButton(
+                      child: Text(formCubit.state.isSubmitting
+                          ? 'Submiting'
+                          : 'Submit'),
+                      onPressed: formCubit.state.isSubmitting
+                          ? null
+                          : () => formCubit.trySubmit(),
+                    ),
+                  )
               ],
             );
           }),

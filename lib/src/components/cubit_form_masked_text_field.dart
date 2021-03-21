@@ -43,7 +43,7 @@ class CubitFormMaskedTextFieldState extends State<CubitFormMaskedTextField> {
 
   @override
   void initState() {
-    subscription = widget.formFieldCubit.listen(_cubitListener);
+    subscription = widget.formFieldCubit.stream.listen(_cubitListener);
     super.initState();
   }
 

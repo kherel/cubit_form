@@ -47,7 +47,7 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
       ..addListener(() {
         widget.formFieldCubit.setValue(controller.text);
       });
-    subscription = widget.formFieldCubit.listen(_cubitListener);
+    subscription = widget.formFieldCubit.stream.listen(_cubitListener);
     super.initState();
   }
 
