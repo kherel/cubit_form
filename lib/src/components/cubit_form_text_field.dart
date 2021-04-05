@@ -55,11 +55,21 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
     if (state is InitialFieldCubitState) {
       controller.clear();
       controller.text = state.value;
+      _unfocus();
     }
     if (state is ExternalChangeFieldCubitState) {
+      _unfocus();
+
       controller.text = state.value;
       controller.selection = TextSelection.fromPosition(
           TextPosition(offset: controller.text.length));
+    }
+  }
+
+  void _unfocus() {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.focusedChild?.unfocus();
     }
   }
 

@@ -1,3 +1,6 @@
+## 1.0.5-nullsafety.0
+  - add unfocus on reset
+
 ## 1.0.4-nullsafety.0
   - fix CubitFormMaskedTextField reset
 
