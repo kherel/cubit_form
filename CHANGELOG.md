@@ -1,3 +1,12 @@
+## 1.0.4-nullsafety.0
+  - fix CubitFormMaskedTextField reset
+
+## 1.0.3-nullsafety.0
+  - fix CubitFormTextField reset
+
+## 1.0.2-nullsafety.0
+  - add addFields instead of setFields // now you can add new fields in child class
+
 ## 1.0.1-nullsafety.0
   - add max lines parameter
 

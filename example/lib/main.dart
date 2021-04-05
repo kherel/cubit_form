@@ -10,11 +10,11 @@ void main() {
 abstract class Real extends FormCubit {
   Real() : super() {
     login = FieldCubit<String>(
-      initalValue: '',
+      initalValue: 'Initial value',
       validations: [
         RequiredStringValidation('required'),
         ValidationModel((value) => value.length < 3, 'too small'),
-        ValidationModel((value) => value.length > 10, 'too big'),
+        ValidationModel((value) => value.length > 20, 'too big'),
       ],
     )..stream.listen((_) {
         password.errorCheck();
@@ -29,12 +29,29 @@ abstract class Real extends FormCubit {
       ],
     );
 
-    var fields = [login, password];
-    super.addFields(fields);
+    zipCodeFormater = MaskTextInputFormatter(
+      initialText: '1234-123',
+      mask: '#####-####',
+      filter: {"#": RegExp(r'[0-9]')},
+    );
+
+    zipCode = FieldCubit(
+      initalValue: zipCodeFormater.getMaskedText(),
+      validations: [
+        RequiredStringValidation('Required'),
+        RegExpValidation(
+          RegExp(r'^(^\d{5}$)|(^\d{5}-\d{4}$)'),
+          'should be 4 or 9 digets',
+        ),
+      ],
+    );
+    var fields = [login, password, zipCode];
+    addFields(fields);
   }
   late FieldCubit<String> login;
-
   late FieldCubit<String> password;
+  late MaskTextInputFormatter zipCodeFormater;
+  late FieldCubit<String> zipCode;
 
   @override
   FutureOr<bool> asyncValidation() {
@@ -53,7 +70,7 @@ class RealChild extends Real {
     );
     var fields = [string];
 
-    super.addFields(fields);
+    addFields(fields);
   }
 
   @override
@@ -71,6 +88,13 @@ class RealChild extends Real {
 
   void setString() {
     string.externalSetValue('bbb');
+  }
+
+  @override
+  reset() {
+    for (var f in fields) {
+      f.reset();
+    }
   }
 
   late FieldCubit<String> string;
@@ -110,6 +134,7 @@ class MyHomePage extends StatelessWidget {
   - password must be longer than 3 symbols and not the same as login
                     '''),
                 ),
+                Text(formCubit.login.state.value),
                 CubitFormTextField(
                   formFieldCubit: formCubit.login,
                   decoration: InputDecoration(
@@ -124,6 +149,12 @@ class MyHomePage extends StatelessWidget {
                     hintText: 'another text',
                     labelText: 'password',
                   ),
+                ),
+                CubitFormMaskedTextField(
+                  formFieldCubit: formCubit.zipCode,
+                  decoration: InputDecoration(
+                      labelText: 'zipCode', helperText: 'zipCode'),
+                  maskFormatter: formCubit.zipCodeFormater,
                 ),
                 CubitFormTextField(
                   cursorColor: Colors.red,
@@ -150,13 +181,22 @@ class MyHomePage extends StatelessWidget {
                   ),
                 if (!formCubit.state.hasErrorToShow)
                   Center(
-                    child: ElevatedButton(
-                      child: Text(formCubit.state.isSubmitting
-                          ? 'Submiting'
-                          : 'Submit'),
-                      onPressed: formCubit.state.isSubmitting
-                          ? null
-                          : () => formCubit.trySubmit(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          child: Text(formCubit.state.isSubmitting
+                              ? 'Submiting'
+                              : 'Submit'),
+                          onPressed: formCubit.state.isSubmitting
+                              ? null
+                              : () => formCubit.trySubmit(),
+                        ),
+                        ElevatedButton(
+                          child: Text('Reset'),
+                          onPressed: () => formCubit.reset(),
+                        ),
+                      ],
                     ),
                   )
               ],

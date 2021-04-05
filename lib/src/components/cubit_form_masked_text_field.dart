@@ -6,13 +6,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
+export 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
 class CubitFormMaskedTextField extends StatefulWidget {
   const CubitFormMaskedTextField({
     required this.formFieldCubit,
     this.keyboardType,
     this.decoration,
-    this.obscureText = false,
-    this.maskFormatter,
+    required this.maskFormatter,
     this.scrollPadding,
     this.style,
     this.textAlign,
@@ -24,9 +25,8 @@ class CubitFormMaskedTextField extends StatefulWidget {
   final FieldCubit<String> formFieldCubit;
 
   final InputDecoration? decoration;
-  final bool obscureText;
   final TextInputType? keyboardType;
-  final MaskTextInputFormatter? maskFormatter;
+  final MaskTextInputFormatter maskFormatter;
   final EdgeInsets? scrollPadding;
   final TextStyle? style;
   final TextAlign? textAlign;
@@ -49,9 +49,13 @@ class CubitFormMaskedTextFieldState extends State<CubitFormMaskedTextField> {
 
   void _cubitListener(FieldCubitState<String> state) {
     if (state is InitialFieldCubitState) {
-      if (widget.maskFormatter != null) {
-        widget.maskFormatter!.clear();
-      }
+      widget.maskFormatter.clear();
+      widget.maskFormatter.formatEditUpdate(
+        const TextEditingValue(),
+        TextEditingValue(
+          text: widget.formFieldCubit.state.value,
+        ),
+      );
     }
   }
 
@@ -71,9 +75,7 @@ class CubitFormMaskedTextFieldState extends State<CubitFormMaskedTextField> {
       formFieldCubit: widget.formFieldCubit,
       keyboardType: widget.keyboardType,
       decoration: widget.decoration,
-      obscureText: widget.obscureText,
-      inputFormatters:
-          widget.maskFormatter != null ? [widget.maskFormatter!] : [],
+      inputFormatters: [widget.maskFormatter],
       scrollPadding: widget.scrollPadding ?? EdgeInsets.all(20.0),
     );
   }

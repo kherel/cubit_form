@@ -54,6 +54,7 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
   void _cubitListener(FieldCubitState<String> state) {
     if (state is InitialFieldCubitState) {
       controller.clear();
+      controller.text = state.value;
     }
     if (state is ExternalChangeFieldCubitState) {
       controller.text = state.value;
