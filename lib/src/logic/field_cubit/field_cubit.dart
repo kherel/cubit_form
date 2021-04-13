@@ -18,12 +18,10 @@ class FieldCubit<T> extends Cubit<FieldCubitState<T>> {
   final List<ValidationModel<T>> validations;
 
   void setValue(T value) {
-    return emit(
-      state.copyWith(
-        value: value,
-        error: tillfirstError<T>(value, validations),
-      ),
-    );
+    return emit(state.setValue(
+      value: value,
+      error: tillfirstError<T>(value, validations),
+    ));
   }
 
   void externalSetValue(T value) {

@@ -56,7 +56,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.0.7-nullsafety.0"
+    version: "1.0.10-nullsafety.0"
   cupertino_icons:
     dependency: "direct main"
     description:

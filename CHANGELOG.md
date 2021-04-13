@@ -1,3 +1,12 @@
+## 1.0.10-nullsafety.0
+  - fix
+
+## 1.0.9-nullsafety.0
+  - fix
+
+## 1.0.8-nullsafety.0
+  - add FieldCubitState set value, for nullable values
+
 ## 1.0.7-nullsafety.0
   - fix
 

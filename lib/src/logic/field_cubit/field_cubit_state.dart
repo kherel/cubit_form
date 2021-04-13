@@ -14,6 +14,17 @@ class FieldCubitState<T> extends Equatable {
   bool get isValid => error == null;
   String? get shownError => isErrorShown ? error : null;
 
+  FieldCubitState<T> setValue({
+    required T value,
+    String? error,
+  }) {
+    return FieldCubitState(
+      error: error,
+      value: value,
+      isErrorShown: isErrorShown,
+    );
+  }
+
   FieldCubitState<T> copyWith({
     T? value,
     String? error,
