@@ -26,6 +26,14 @@ class FieldCubitState<T> extends Equatable {
     );
   }
 
+  FieldCubitState<T> errorCheck({String? error}) {
+    return FieldCubitErrorCheckState(
+      value: value,
+      error: error,
+      isErrorShown: isErrorShown,
+    );
+  }
+
   FieldCubitState<T> externalChange({
     required T value,
     required String? error,
@@ -65,6 +73,17 @@ class ExternalChangeFieldCubitState<T> extends FieldCubitState<T> {
           error: error,
           isErrorShown: isErrorShown,
         );
+
+  @override
+  List<Object?> get props => [value, error, isErrorShown];
+}
+
+class FieldCubitErrorCheckState<T> extends FieldCubitState<T> {
+  FieldCubitErrorCheckState({
+    required T value,
+    required String? error,
+    required bool isErrorShown,
+  }) : super(value: value, error: error, isErrorShown: isErrorShown);
 
   @override
   List<Object?> get props => [value, error, isErrorShown];

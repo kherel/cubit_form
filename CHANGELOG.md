@@ -1,3 +1,6 @@
+## 1.0.6-nullsafety.0
+  - add extra Field CubitErrorCheckState for dependent validations and listening FieldCubit.stream at the same time
+
 ## 1.0.5-nullsafety.0
   - add unfocus on reset
 
