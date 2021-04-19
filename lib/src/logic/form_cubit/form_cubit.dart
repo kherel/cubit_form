@@ -10,6 +10,7 @@ abstract class FormCubit extends Cubit<FormCubitState> {
   FormCubit() : super(_initState);
 
   static FormCubitState _initState = FormCubitState(
+    isInitial: true,
     isErrorShown: false,
     isFormDataValid: false,
     isSubmitted: false,
@@ -48,8 +49,13 @@ abstract class FormCubit extends Cubit<FormCubitState> {
 
   void validateForm() {
     var isFormValid = fields.every((field) => field.state.isValid);
-    if (isFormValid != state.isFormDataValid) {
-      emit(state.copyWith(isFormValid: isFormValid));
+    var isInitial = fields.every((field) => field.state.isInitial);
+
+    if (isFormValid != state.isFormDataValid || isInitial != state.isInitial) {
+      emit(state.copyWith(
+        isInitial: isInitial,
+        isFormValid: isFormValid,
+      ));
     }
   }
 

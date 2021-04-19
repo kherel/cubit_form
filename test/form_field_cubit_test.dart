@@ -23,6 +23,7 @@ void main() {
       expect: () => <FieldCubitState<String>>[
         FieldCubitState<String>(
           value: newValue,
+          initialValue: initialValue,
           error: null,
           isErrorShown: false,
         ),
@@ -38,6 +39,7 @@ void main() {
       expect: () => <FieldCubitState<String>>[
         FieldCubitState<String>(
           value: newValue,
+          initialValue: initialValue,
           error: null,
           isErrorShown: false,
         ),
@@ -71,16 +73,19 @@ void main() {
       expect: () => <FieldCubitState<String>>[
         FieldCubitState<String>(
           value: value1,
+          initialValue: initialValue,
           error: error1,
           isErrorShown: false,
         ),
         FieldCubitState<String>(
           value: value2,
+          initialValue: initialValue,
           error: error2,
           isErrorShown: false,
         ),
         FieldCubitState<String>(
           value: value3,
+          initialValue: initialValue,
           error: null,
           isErrorShown: false,
         ),
@@ -103,6 +108,7 @@ void main() {
       expect: () => <FieldCubitState<String>>[
         FieldCubitState<String>(
           value: value1,
+          initialValue: initialValue,
           error: error1,
           isErrorShown: true,
         ),
@@ -122,6 +128,7 @@ void main() {
       expect: () => <FieldCubitState<String>>[
         FieldCubitState<String>(
           value: initialValue,
+          initialValue: initialValue,
           error: null,
           isErrorShown: true,
         ),
@@ -166,11 +173,13 @@ void main() {
       expect: () => <FieldCubitState<String>>[
         FieldCubitState<String>(
           value: 'value0',
+          initialValue: initialValue,
           error: 'error1',
           isErrorShown: false,
         ),
         FieldCubitState<String>(
           value: 'value1',
+          initialValue: initialValue,
           error: 'error2',
           isErrorShown: false,
         ),

@@ -6,14 +6,17 @@ class FormCubitState extends Equatable {
     required this.isFormDataValid,
     required this.isSubmitting,
     required this.isSubmitted,
+    required this.isInitial,
   });
 
+  final bool isInitial;
   final bool isErrorShown;
   final bool isFormDataValid;
   final bool isSubmitting;
   final bool isSubmitted;
 
   FormCubitState copyWith({
+    bool? isInitial,
     bool? isErrorShown,
     bool? isFormValid,
     bool? isSubmitting,
@@ -21,6 +24,7 @@ class FormCubitState extends Equatable {
   }) {
     assert(isSubmitting != true || this.isFormDataValid);
     return FormCubitState(
+      isInitial: isInitial ?? this.isInitial,
       isErrorShown: isErrorShown ?? this.isErrorShown,
       isFormDataValid: isFormValid ?? this.isFormDataValid,
       isSubmitting: isSubmitting ?? this.isSubmitting,
@@ -31,6 +35,11 @@ class FormCubitState extends Equatable {
   bool get hasErrorToShow => !isFormDataValid && isErrorShown;
 
   @override
-  List<Object> get props =>
-      [isErrorShown, isFormDataValid, isSubmitting, isSubmitted];
+  List<Object> get props => [
+        isInitial,
+        isErrorShown,
+        isFormDataValid,
+        isSubmitting,
+        isSubmitted,
+      ];
 }

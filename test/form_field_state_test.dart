@@ -7,6 +7,7 @@ void main() {
     test('should show isValid false if state has an error', () {
       var state = FieldCubitState(
         value: 'value',
+        initialValue: 'value',
         error: 'error',
         isErrorShown: false,
       );
@@ -17,6 +18,7 @@ void main() {
     test('should show no shownError if isErrorShown is false', () {
       var state = FieldCubitState(
         value: 'value',
+        initialValue: 'value',
         error: 'error',
         isErrorShown: false,
       );

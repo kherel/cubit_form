@@ -179,6 +179,7 @@ class MyHomePage extends StatelessWidget {
                       child: Text('Not valid'),
                     ),
                   ),
+                Text(formCubit.state.isInitial ? "inital" : 'changed'),
                 if (!formCubit.state.hasErrorToShow)
                   Center(
                     child: Row(

@@ -1,3 +1,6 @@
+## 1.0.11-nullsafety.0
+  - add isInitial form state parameter to check if form has initials values
+
 ## 1.0.10-nullsafety.0
   - fix
 

@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:cubit_form/src/logic/models/validation.dart';
 import 'package:equatable/equatable.dart';
+import 'package:collection/collection.dart';
 
 part 'field_cubit_state.dart';
+
+Function deepEq = const DeepCollectionEquality().equals;
 
 class FieldCubit<T> extends Cubit<FieldCubitState<T>> {
   FieldCubit({
@@ -10,6 +13,7 @@ class FieldCubit<T> extends Cubit<FieldCubitState<T>> {
     this.validations = const [],
   }) : super(FieldCubitState<T>(
           value: initalValue,
+          initialValue: initalValue,
           error: tillfirstError<T>(initalValue, validations),
           isErrorShown: false,
         ));
