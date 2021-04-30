@@ -55,3 +55,11 @@ class CombinedValidation<T> extends ValidationModel<T> {
 
 typedef ValidationTest<T> = bool Function(T value);
 typedef CombinedTest = bool Function();
+
+class ValidateIf<T> extends ValidationModel<T> {
+  ValidateIf(
+      ValidationTest<T> needToValidateIf, ValidationModel<T> innerValidation)
+      : super(
+            (T value) => needToValidateIf(value) && innerValidation.test(value),
+            innerValidation.errorMassage);
+}
