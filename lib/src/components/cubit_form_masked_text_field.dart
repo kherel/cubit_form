@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
+import 'cubit_form_text_field.dart';
+
 export 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CubitFormMaskedTextField extends StatefulWidget {

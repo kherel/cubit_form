@@ -1,3 +1,6 @@
+## 1.0.12-nullsafety.0
+  - add CubitFormIntField
+
 ## 1.0.11-nullsafety.0
   - add isInitial form state parameter to check if form has initials values
 

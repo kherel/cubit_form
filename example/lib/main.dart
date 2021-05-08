@@ -45,13 +45,19 @@ abstract class Real extends FormCubit {
         ),
       ],
     );
-    var fields = [login, password, zipCode];
+
+    number = FieldCubit(
+      initalValue: 100,
+      validations: [RequiredIntValidation('required')],
+    );
+    var fields = [login, password, zipCode, number];
     addFields(fields);
   }
   late FieldCubit<String> login;
   late FieldCubit<String> password;
   late MaskTextInputFormatter zipCodeFormater;
   late FieldCubit<String> zipCode;
+  late FieldCubit<int> number;
 
   @override
   FutureOr<bool> asyncValidation() {
@@ -122,85 +128,94 @@ class MyHomePage extends StatelessWidget {
           create: (_) => RealChild(),
           child: Builder(builder: (context) {
             var formCubit = context.watch<RealChild>();
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Text('''
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Text('''
   validation rules:
   - login must be longer than 3 symbols and shorter than 10
   - password must be longer than 3 symbols and not the same as login
-                    '''),
-                ),
-                Text(formCubit.login.state.value),
-                CubitFormTextField(
-                  formFieldCubit: formCubit.login,
-                  decoration: InputDecoration(
-                    hintText: 'name',
-                    labelText: 'login',
+                      '''),
                   ),
-                ),
-                CubitFormTextField(
-                  formFieldCubit: formCubit.password,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'another text',
-                    labelText: 'password',
+                  Text(formCubit.login.state.value),
+                  CubitFormTextField(
+                    formFieldCubit: formCubit.login,
+                    decoration: InputDecoration(
+                      hintText: 'name',
+                      labelText: 'login',
+                    ),
                   ),
-                ),
-                CubitFormMaskedTextField(
-                  formFieldCubit: formCubit.zipCode,
-                  decoration: InputDecoration(
-                      labelText: 'zipCode', helperText: 'zipCode'),
-                  maskFormatter: formCubit.zipCodeFormater,
-                ),
-                CubitFormTextField(
-                  cursorColor: Colors.red,
-                  formFieldCubit: formCubit.string,
-                  decoration: InputDecoration(
-                    hintText: 'another string',
-                    labelText: 'string',
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.refresh,
+                  CubitFormIntField(
+                    formFieldCubit: formCubit.number,
+                    decoration: InputDecoration(
+                      hintText: 'number',
+                      labelText: 'count',
+                    ),
+                  ),
+                  CubitFormTextField(
+                    formFieldCubit: formCubit.password,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: 'another text',
+                      labelText: 'password',
+                    ),
+                  ),
+                  CubitFormMaskedTextField(
+                    formFieldCubit: formCubit.zipCode,
+                    decoration: InputDecoration(
+                        labelText: 'zipCode', helperText: 'zipCode'),
+                    maskFormatter: formCubit.zipCodeFormater,
+                  ),
+                  CubitFormTextField(
+                    cursorColor: Colors.red,
+                    formFieldCubit: formCubit.string,
+                    decoration: InputDecoration(
+                      hintText: 'another string',
+                      labelText: 'string',
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.refresh,
+                          ),
+                          onPressed: () => formCubit.setString(),
                         ),
-                        onPressed: () => formCubit.setString(),
                       ),
                     ),
                   ),
-                ),
-                if (formCubit.state.hasErrorToShow)
-                  Center(
-                    child: _Error(
-                      child: Text('Not valid'),
+                  if (formCubit.state.hasErrorToShow)
+                    Center(
+                      child: _Error(
+                        child: Text('Not valid'),
+                      ),
                     ),
-                  ),
-                Text(formCubit.state.isInitial ? "inital" : 'changed'),
-                if (!formCubit.state.hasErrorToShow)
-                  Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ElevatedButton(
-                          child: Text(formCubit.state.isSubmitting
-                              ? 'Submiting'
-                              : 'Submit'),
-                          onPressed: formCubit.state.isSubmitting
-                              ? null
-                              : () => formCubit.trySubmit(),
-                        ),
-                        ElevatedButton(
-                          child: Text('Reset'),
-                          onPressed: () => formCubit.reset(),
-                        ),
-                      ],
-                    ),
-                  )
-              ],
+                  Text(formCubit.state.isInitial ? "inital" : 'changed'),
+                  if (!formCubit.state.hasErrorToShow)
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ElevatedButton(
+                            child: Text(formCubit.state.isSubmitting
+                                ? 'Submiting'
+                                : 'Submit'),
+                            onPressed: formCubit.state.isSubmitting
+                                ? null
+                                : () => formCubit.trySubmit(),
+                          ),
+                          ElevatedButton(
+                            child: Text('Reset'),
+                            onPressed: () => formCubit.reset(),
+                          ),
+                        ],
+                      ),
+                    )
+                ],
+              ),
             );
           }),
         ),
