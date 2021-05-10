@@ -42,7 +42,8 @@ class CubitFormIntFieldState extends State<CubitFormIntField> {
     controller = TextEditingController(
         text: widget.formFieldCubit.state.value.toString())
       ..addListener(() {
-        widget.formFieldCubit.setValue(int.parse(controller.text));
+        widget.formFieldCubit.setValue(
+            controller.text.isNotEmpty ? int.parse(controller.text) : 0);
       });
     subscription = widget.formFieldCubit.stream.listen(_cubitListener);
     super.initState();

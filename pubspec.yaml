@@ -1,6 +1,6 @@
 name: cubit_form
 description: Cubit Form
-version: 1.0.12-nullsafety.0
+version: 1.0.13-nullsafety.0
 homepage: https://github.com/kherel/cubit_form
 
 environment:
