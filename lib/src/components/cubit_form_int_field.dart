@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:cubit_form/cubit_form.dart';
 import 'package:flutter/material.dart';
@@ -92,6 +93,21 @@ class CubitFormIntFieldState extends State<CubitFormIntField> {
             keyboardType: TextInputType.number,
             controller: controller,
             obscureText: widget.obscureText,
+            onChanged: (value) {
+              var selection = controller.selection;
+              final RegExp regexp = new RegExp(r'^0+(?=.)');
+              var match = regexp.firstMatch(value);
+
+              var matchLengh = match?.group(0)?.length ?? 0;
+              if (matchLengh != 0) {
+                controller.text = value.replaceAll(regexp, '');
+                controller.selection = TextSelection.fromPosition(
+                  TextPosition(
+                    offset: math.min(matchLengh, selection.extent.offset),
+                  ),
+                );
+              }
+            },
             decoration: widget.decoration?.copyWith(
               errorText: state.isErrorShown ? state.error : null,
             ),
