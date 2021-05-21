@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 class CubitFormTextField extends StatefulWidget {
   const CubitFormTextField({
     required this.formFieldCubit,
+    this.maskController,
     this.keyboardType,
     this.decoration,
     this.obscureText = false,
@@ -32,7 +33,7 @@ class CubitFormTextField extends StatefulWidget {
   final FocusNode? focusNode;
   final Color? cursorColor;
   final int maxLines;
-
+  final MaskedTextController? maskController;
   @override
   CubitFormTextFieldState createState() => CubitFormTextFieldState();
 }
@@ -43,10 +44,18 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
   late StreamSubscription subscription;
   @override
   void initState() {
-    controller = TextEditingController(text: widget.formFieldCubit.state.value)
-      ..addListener(() {
+    if (widget.maskController == null) {
+      controller =
+          TextEditingController(text: widget.formFieldCubit.state.value)
+            ..addListener(() {
+              widget.formFieldCubit.setValue(controller.text);
+            });
+    } else {
+      widget.maskController!.addListener(() {
         widget.formFieldCubit.setValue(controller.text);
       });
+    }
+
     subscription = widget.formFieldCubit.stream.listen(_cubitListener);
     super.initState();
   }
@@ -92,7 +101,7 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
             textAlign: widget.textAlign ?? TextAlign.left,
             style: widget.style ?? Theme.of(context).textTheme.subtitle1,
             keyboardType: widget.keyboardType,
-            controller: controller,
+            controller: widget.maskController ?? controller,
             obscureText: widget.obscureText,
             decoration: widget.decoration?.copyWith(
               errorText: state.isErrorShown ? state.error : null,

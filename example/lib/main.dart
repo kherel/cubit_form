@@ -29,14 +29,8 @@ abstract class Real extends FormCubit {
       ],
     );
 
-    zipCodeFormater = MaskTextInputFormatter(
-      initialText: '1234-123',
-      mask: '#####-####',
-      filter: {"#": RegExp(r'[0-9]')},
-    );
-
     zipCode = FieldCubit(
-      initalValue: zipCodeFormater.getMaskedText(),
+      initalValue: '123123123',
       validations: [
         RequiredStringValidation('Required'),
         RegExpValidation(
@@ -55,7 +49,6 @@ abstract class Real extends FormCubit {
   }
   late FieldCubit<String> login;
   late FieldCubit<String> password;
-  late MaskTextInputFormatter zipCodeFormater;
   late FieldCubit<String> zipCode;
   late FieldCubit<int> number;
 
@@ -168,7 +161,7 @@ class MyHomePage extends StatelessWidget {
                     formFieldCubit: formCubit.zipCode,
                     decoration: InputDecoration(
                         labelText: 'zipCode', helperText: 'zipCode'),
-                    maskFormatter: formCubit.zipCodeFormater,
+                    mask: '0000-0000',
                   ),
                   CubitFormTextField(
                     cursorColor: Colors.red,
