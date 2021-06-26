@@ -72,6 +72,19 @@ class FieldCubitState<T> extends Equatable {
     );
   }
 
+  FieldCubitState<T> setMaskValue({
+    required T value,
+    required String? error,
+    bool? isErrorShown,
+  }) {
+    return MaskFieldCubitState(
+      value: value,
+      initalValue: initialValue,
+      error: error,
+      isErrorShown: isErrorShown ?? this.isErrorShown,
+    );
+  }
+
   @override
   String toString() {
     return 'value: $value, error: $error, isErrorShown: $isErrorShown';
@@ -97,6 +110,23 @@ class InitialFieldCubitState<T> extends FieldCubitState<T> {
 
 class ExternalChangeFieldCubitState<T> extends FieldCubitState<T> {
   const ExternalChangeFieldCubitState({
+    required T value,
+    required T initalValue,
+    String? error,
+    required bool isErrorShown,
+  }) : super(
+          value: value,
+          initialValue: initalValue,
+          error: error,
+          isErrorShown: isErrorShown,
+        );
+
+  @override
+  List<Object?> get props => [value, error, isErrorShown];
+}
+
+class MaskFieldCubitState<T> extends FieldCubitState<T> {
+  const MaskFieldCubitState({
     required T value,
     required T initalValue,
     String? error,

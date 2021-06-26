@@ -37,6 +37,15 @@ class FieldCubit<T> extends Cubit<FieldCubitState<T>> {
     );
   }
 
+  void setMaskValue(T value) {
+    return emit(
+      state.setMaskValue(
+        value: value,
+        error: tillfirstError<T>(value, validations),
+      ),
+    );
+  }
+
   //for async validation
   void setError(String error) => emit(
         state.copyWith(

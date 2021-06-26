@@ -52,7 +52,7 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
             });
     } else {
       widget.maskController!.addListener(() {
-        widget.formFieldCubit.setValue(controller.text);
+        widget.formFieldCubit.setMaskValue(widget.maskController!.text);
       });
     }
 
@@ -61,6 +61,12 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
   }
 
   void _cubitListener(FieldCubitState<String> state) {
+    if (state is MaskFieldCubitState) {
+      widget.maskController!.text = state.value;
+      widget.maskController!.selection = TextSelection.fromPosition(
+          TextPosition(offset: widget.maskController!.text.length));
+    }
+
     if (state is InitialFieldCubitState) {
       controller.clear();
       controller.text = state.value;
