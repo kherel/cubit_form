@@ -158,7 +158,24 @@ class MyHomePage extends StatelessWidget {
                     ),
                   ),
                   CubitFormMaskedTextField(
+                    key: ValueKey('key111'),
                     formFieldCubit: formCubit.zipCode,
+                    decoration: InputDecoration(
+                        labelText: 'zipCode', helperText: 'zipCode'),
+                    mask: '0000-0000',
+                  ),
+                  CubitFormMaskedTextField(
+                    key: ValueKey('key'),
+                    formFieldCubit: FieldCubit(
+                      initalValue: '123123123',
+                      validations: [
+                        RequiredStringValidation('Required'),
+                        RegExpValidation(
+                          RegExp(r'^(^\d{5}$)|(^\d{5}-\d{4}$)'),
+                          'should be 4 or 9 digets',
+                        ),
+                      ],
+                    ),
                     decoration: InputDecoration(
                         labelText: 'zipCode', helperText: 'zipCode'),
                     mask: '0000-0000',
