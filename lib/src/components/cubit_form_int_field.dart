@@ -17,6 +17,7 @@ class CubitFormIntField extends StatefulWidget {
     this.focusNode,
     this.cursorColor,
     this.maxLines = 1,
+    this.autofocus = false,
     Key? key,
   }) : super(key: key);
 
@@ -29,6 +30,7 @@ class CubitFormIntField extends StatefulWidget {
   final FocusNode? focusNode;
   final Color? cursorColor;
   final int maxLines;
+  final bool autofocus;
 
   @override
   CubitFormIntFieldState createState() => CubitFormIntFieldState();
@@ -85,6 +87,7 @@ class CubitFormIntFieldState extends State<CubitFormIntField> {
         bloc: widget.formFieldCubit,
         builder: (context, state) {
           return TextField(
+            autofocus: widget.autofocus,
             maxLines: widget.maxLines,
             cursorColor: widget.cursorColor,
             focusNode: widget.focusNode,

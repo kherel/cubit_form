@@ -21,6 +21,7 @@ class CubitFormMaskedTextField extends StatefulWidget {
     this.textAlign,
     this.focusNode,
     this.cursorColor,
+    this.autofocus = false,
     Key? key,
   }) : super(key: key);
 
@@ -34,6 +35,7 @@ class CubitFormMaskedTextField extends StatefulWidget {
   final TextAlign? textAlign;
   final FocusNode? focusNode;
   final Color? cursorColor;
+  final bool autofocus;
 
   @override
   CubitFormMaskedTextFieldState createState() =>
@@ -70,6 +72,7 @@ class CubitFormMaskedTextFieldState extends State<CubitFormMaskedTextField> {
   @override
   Widget build(BuildContext context) {
     return CubitFormTextField(
+      autofocus: widget.autofocus,
       cursorColor: widget.cursorColor,
       focusNode: widget.focusNode,
       textAlign: widget.textAlign ?? TextAlign.left,

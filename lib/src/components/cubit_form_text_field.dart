@@ -18,12 +18,14 @@ class CubitFormTextField extends StatefulWidget {
     this.focusNode,
     this.cursorColor,
     this.maxLines = 1,
+    this.autofocus = false,
     Key? key,
   }) : super(key: key);
 
   final FieldCubit<String> formFieldCubit;
   final InputDecoration? decoration;
   final bool obscureText;
+  final bool autofocus;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final EdgeInsets? scrollPadding;
@@ -86,6 +88,7 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
         bloc: widget.formFieldCubit,
         builder: (context, state) {
           return TextField(
+            autofocus: widget.autofocus,
             maxLines: widget.maxLines,
             cursorColor: widget.cursorColor,
             focusNode: widget.focusNode,
