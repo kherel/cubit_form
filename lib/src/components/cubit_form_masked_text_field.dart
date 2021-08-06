@@ -1,14 +1,12 @@
 import 'dart:async';
 
-import 'package:cubit_form/cubit_form.dart';
+import 'package:cubit_form/src/logic/field_cubit/field_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import 'cubit_form_text_field.dart';
-
-export 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CubitFormMaskedTextField extends StatefulWidget {
   const CubitFormMaskedTextField({
@@ -83,7 +81,6 @@ class CubitFormMaskedTextFieldState extends State<CubitFormMaskedTextField> {
       formFieldCubit: widget.formFieldCubit,
       keyboardType: widget.keyboardType,
       decoration: widget.decoration,
-      
       inputFormatters: [
         widget.maskFormatter,
       ],

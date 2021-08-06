@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:cubit_form/cubit_form.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../../cubit_form.dart';
 
 part 'form_cubit_state.dart';
 
