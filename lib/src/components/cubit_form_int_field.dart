@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 class CubitFormIntField extends StatefulWidget {
   const CubitFormIntField({
     required this.formFieldCubit,
-    this.decoration,
+    this.decoration = const InputDecoration(),
     this.obscureText = false,
     this.scrollPadding,
     this.style,
@@ -19,10 +19,14 @@ class CubitFormIntField extends StatefulWidget {
     this.maxLines = 1,
     this.autofocus = false,
     Key? key,
+    this.prefixText,
+    this.hintText,
   }) : super(key: key);
 
   final FieldCubit<int> formFieldCubit;
-  final InputDecoration? decoration;
+  final String? prefixText;
+  final String? hintText;
+  final InputDecoration decoration;
   final bool obscureText;
   final EdgeInsets? scrollPadding;
   final TextStyle? style;
@@ -111,7 +115,11 @@ class CubitFormIntFieldState extends State<CubitFormIntField> {
                 );
               }
             },
-            decoration: widget.decoration?.copyWith(
+            decoration: widget.decoration.copyWith(
+              prefixStyle:
+                  widget.style ?? Theme.of(context).textTheme.subtitle1,
+              prefixText: widget.prefixText,
+              hintText: widget.hintText,
               errorText: state.isErrorShown ? state.error : null,
             ),
             inputFormatters: <TextInputFormatter>[

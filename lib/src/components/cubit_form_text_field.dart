@@ -9,7 +9,7 @@ class CubitFormTextField extends StatefulWidget {
   const CubitFormTextField({
     required this.formFieldCubit,
     this.keyboardType,
-    this.decoration,
+    this.decoration = const InputDecoration(),
     this.obscureText = false,
     this.inputFormatters,
     this.scrollPadding,
@@ -20,10 +20,14 @@ class CubitFormTextField extends StatefulWidget {
     this.maxLines = 1,
     this.autofocus = false,
     Key? key,
+    this.prefixText,
+    this.hintText,
   }) : super(key: key);
 
   final FieldCubit<String> formFieldCubit;
-  final InputDecoration? decoration;
+  final String? prefixText;
+  final String? hintText;
+  final InputDecoration decoration;
   final bool obscureText;
   final bool autofocus;
   final TextInputType? keyboardType;
@@ -97,7 +101,11 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
             keyboardType: widget.keyboardType,
             controller: controller,
             obscureText: widget.obscureText,
-            decoration: widget.decoration?.copyWith(
+            decoration: widget.decoration.copyWith(
+              prefixStyle:
+                  widget.style ?? Theme.of(context).textTheme.subtitle1,
+              prefixText: widget.prefixText,
+              hintText: widget.hintText,
               errorText: state.isErrorShown ? state.error : null,
             ),
             inputFormatters: widget.inputFormatters,

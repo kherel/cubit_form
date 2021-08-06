@@ -14,7 +14,7 @@ class CubitFormMaskedTextField extends StatefulWidget {
   const CubitFormMaskedTextField({
     required this.formFieldCubit,
     this.keyboardType,
-    this.decoration,
+    this.decoration = const InputDecoration(),
     required this.maskFormatter,
     this.scrollPadding,
     this.style,
@@ -22,12 +22,15 @@ class CubitFormMaskedTextField extends StatefulWidget {
     this.focusNode,
     this.cursorColor,
     this.autofocus = false,
+    this.prefixText,
+    this.hintText,
     Key? key,
   }) : super(key: key);
 
   final FieldCubit<String> formFieldCubit;
-
-  final InputDecoration? decoration;
+  final String? prefixText;
+  final String? hintText;
+  final InputDecoration decoration;
   final TextInputType? keyboardType;
   final MaskTextInputFormatter maskFormatter;
   final EdgeInsets? scrollPadding;
@@ -80,7 +83,10 @@ class CubitFormMaskedTextFieldState extends State<CubitFormMaskedTextField> {
       formFieldCubit: widget.formFieldCubit,
       keyboardType: widget.keyboardType,
       decoration: widget.decoration,
-      inputFormatters: [widget.maskFormatter],
+      
+      inputFormatters: [
+        widget.maskFormatter,
+      ],
       scrollPadding: widget.scrollPadding ?? EdgeInsets.all(20.0),
     );
   }
