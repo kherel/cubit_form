@@ -1,4 +1,4 @@
-## 1.0.19
+## 1.0.19-nullsafety.0
   - move back to mask_text_input_formatter
 
 ## 1.0.18
@@ -11,7 +11,7 @@
   - fix
 
 ## 1.0.15
-  - moved to extended_masked_text
+  - moved to Y
 
 ## 1.0.14-nullsafety.0
   - remove leading zero for int field
