@@ -11,7 +11,7 @@
   - fix
 
 ## 1.0.15
-  - moved to Y
+  - moved to extended_masked_text
 
 ## 1.0.14-nullsafety.0
   - remove leading zero for int field
