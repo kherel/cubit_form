@@ -1,6 +1,6 @@
 name: cubit_form
 description: Cubit Form
-version: 1.0.14-nullsafety.0
+version: 1.0.19 
 homepage: https://github.com/kherel/cubit_form
 
 environment:
@@ -10,16 +10,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  bloc: ^7.0.0
+  bloc: ^7.2.0
   collection: ^1.15.0
   email_validator: ^2.0.1
   equatable: ^2.0.3
-  flutter_bloc: ^7.1.0
+  flutter_bloc: ^7.3.0
   mask_text_input_formatter: ^2.0.0-nullsafety.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  bloc_test: ^8.1.0
+  bloc_test: ^8.2.0
 flutter:
   uses-material-design: true
