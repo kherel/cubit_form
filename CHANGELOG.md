@@ -1,3 +1,7 @@
+## 2.0.1
+  - add CubitFormFieldsBuilder
+## 2.0.0
+  - upgrade dependencies  
 ## 1.0.19-nullsafety.0
   - move back to mask_text_input_formatter
 

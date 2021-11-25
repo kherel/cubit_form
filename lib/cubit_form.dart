@@ -6,6 +6,8 @@ export './src/components/cubit_form_text_field.dart';
 export './src/components/cubit_form_masked_text_field.dart';
 
 export './src/logic/field_cubit/field_cubit.dart';
+export './src/logic/cubit_form_listener/cubit_form_listener.dart';
+
 export './src/logic/models/validation.dart';
 export './src/logic/models/validations.dart';
 
