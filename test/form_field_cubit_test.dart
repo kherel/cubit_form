@@ -186,4 +186,48 @@ void main() {
       ],
     );
   });
+
+  test("True validation should be valid if value is true", () {
+    var state = FieldCubit<bool>(
+      initalValue: true,
+      validations: [
+        RequireTrueValidation("errorText"),
+      ],
+    ).state;
+
+    expect(state.isValid, true);
+  });
+
+  test("True validation should not be valid if value is false", () {
+    var state = FieldCubit<bool>(
+      initalValue: false,
+      validations: [
+        RequireTrueValidation("errorText"),
+      ],
+    ).state;
+
+    expect(state.isValid, false);
+  });
+
+  test("Empty validation should be valid if value is not empty", () {
+    var state = FieldCubit<List<String>>(
+      initalValue: ['a'],
+      validations: [
+        RequiredNotEmpty("errorText"),
+      ],
+    ).state;
+
+    expect(state.isValid, true);
+  });
+
+  test("Empty validation should not be valid if value is empty", () {
+    var state = FieldCubit<List<String>>(
+      initalValue: [],
+      validations: [
+        RequiredNotEmpty("errorText"),
+      ],
+    ).state;
+
+    expect(state.isValid, false);
+  });
 }
