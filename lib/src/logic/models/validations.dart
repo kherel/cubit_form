@@ -53,6 +53,16 @@ class CombinedValidation<T> extends ValidationModel<T> {
             innerValidation.errorMassage);
 }
 
+class RequireTrueValidation extends ValidationModel<bool> {
+  RequireTrueValidation(String errorText)
+      : super((value) => value == false, errorText);
+}
+
+class RequiredNotEmpty<T> extends ValidationModel<List<T>> {
+  RequiredNotEmpty(String errorText)
+      : super((value) => value.isEmpty, errorText);
+}
+
 typedef ValidationTest<T> = bool Function(T value);
 typedef CombinedTest = bool Function();
 
