@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cubit_form/cubit_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 class CubitFormTextField extends StatefulWidget {
   const CubitFormTextField({
@@ -19,10 +18,11 @@ class CubitFormTextField extends StatefulWidget {
     this.cursorColor,
     this.maxLines = 1,
     this.autofocus = false,
-    Key? key,
+    super.key,
     this.prefixText,
     this.hintText,
-  }) : super(key: key);
+    this.isDisabled = false,
+  });
 
   final FieldCubit<String> formFieldCubit;
   final String? prefixText;
@@ -38,6 +38,7 @@ class CubitFormTextField extends StatefulWidget {
   final FocusNode? focusNode;
   final Color? cursorColor;
   final int maxLines;
+  final bool isDisabled;
 
   @override
   CubitFormTextFieldState createState() => CubitFormTextFieldState();
@@ -92,24 +93,28 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
         bloc: widget.formFieldCubit,
         builder: (context, state) {
           return TextField(
+            onTapOutside: (event) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
             autofocus: widget.autofocus,
+            enabled: !widget.isDisabled,
             maxLines: widget.maxLines,
             cursorColor: widget.cursorColor,
             focusNode: widget.focusNode,
             textAlign: widget.textAlign ?? TextAlign.left,
-            style: widget.style ?? Theme.of(context).textTheme.subtitle1,
+            style: widget.style ?? Theme.of(context).textTheme.titleMedium,
             keyboardType: widget.keyboardType,
             controller: controller,
             obscureText: widget.obscureText,
+            textInputAction: TextInputAction.done,
             decoration: widget.decoration.copyWith(
               prefixStyle:
-                  widget.style ?? Theme.of(context).textTheme.subtitle1,
+                  widget.style ?? Theme.of(context).textTheme.titleMedium,
               prefixText: widget.prefixText,
               hintText: widget.hintText,
-              errorText: state.isErrorShown ? state.error : null,
             ),
             inputFormatters: widget.inputFormatters,
-            scrollPadding: widget.scrollPadding ?? EdgeInsets.all(20.0),
+            scrollPadding: widget.scrollPadding ?? const EdgeInsets.all(20.0),
           );
         });
   }

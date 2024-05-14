@@ -1,3 +1,6 @@
+## 2.0.2
+  - update flutter version
+
 ## 2.0.1
   - add CubitFormFieldsBuilder
 ## 2.0.0

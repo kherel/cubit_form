@@ -4,7 +4,6 @@ import 'dart:math' as math;
 import 'package:cubit_form/cubit_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 class CubitFormIntField extends StatefulWidget {
   const CubitFormIntField({
@@ -96,7 +95,7 @@ class CubitFormIntFieldState extends State<CubitFormIntField> {
             cursorColor: widget.cursorColor,
             focusNode: widget.focusNode,
             textAlign: widget.textAlign ?? TextAlign.left,
-            style: widget.style ?? Theme.of(context).textTheme.subtitle1,
+            style: widget.style ?? Theme.of(context).textTheme.titleMedium,
             keyboardType: TextInputType.number,
             controller: controller,
             obscureText: widget.obscureText,
@@ -117,7 +116,7 @@ class CubitFormIntFieldState extends State<CubitFormIntField> {
             },
             decoration: widget.decoration.copyWith(
               prefixStyle:
-                  widget.style ?? Theme.of(context).textTheme.subtitle1,
+                  widget.style ?? Theme.of(context).textTheme.titleMedium,
               prefixText: widget.prefixText,
               hintText: widget.hintText,
               errorText: state.isErrorShown ? state.error : null,
