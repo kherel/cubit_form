@@ -22,6 +22,7 @@ class CubitFormTextField extends StatefulWidget {
     this.prefixText,
     this.hintText,
     this.isDisabled = false,
+    this.onEditingComplete,
   });
 
   final FieldCubit<String> formFieldCubit;
@@ -39,7 +40,7 @@ class CubitFormTextField extends StatefulWidget {
   final Color? cursorColor;
   final int maxLines;
   final bool isDisabled;
-
+  final VoidCallback? onEditingComplete;
   @override
   CubitFormTextFieldState createState() => CubitFormTextFieldState();
 }
@@ -96,6 +97,7 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
             onTapOutside: (event) {
               FocusManager.instance.primaryFocus?.unfocus();
             },
+            onEditingComplete: widget.onEditingComplete,
             autofocus: widget.autofocus,
             enabled: !widget.isDisabled,
             maxLines: widget.maxLines,

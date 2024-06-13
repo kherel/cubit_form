@@ -1,3 +1,6 @@
+## 2.0.3
+  - add onEditingComplete callback
+
 ## 2.0.2
   - update flutter version
 

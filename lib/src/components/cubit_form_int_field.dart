@@ -20,6 +20,7 @@ class CubitFormIntField extends StatefulWidget {
     Key? key,
     this.prefixText,
     this.hintText,
+    this.onEditingComplete,
   }) : super(key: key);
 
   final FieldCubit<int> formFieldCubit;
@@ -34,7 +35,7 @@ class CubitFormIntField extends StatefulWidget {
   final Color? cursorColor;
   final int maxLines;
   final bool autofocus;
-
+  final VoidCallback? onEditingComplete;
   @override
   CubitFormIntFieldState createState() => CubitFormIntFieldState();
 }
@@ -90,6 +91,10 @@ class CubitFormIntFieldState extends State<CubitFormIntField> {
         bloc: widget.formFieldCubit,
         builder: (context, state) {
           return TextField(
+            onEditingComplete: widget.onEditingComplete,
+            onTapOutside: (event) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
             autofocus: widget.autofocus,
             maxLines: widget.maxLines,
             cursorColor: widget.cursorColor,
