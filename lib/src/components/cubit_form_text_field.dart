@@ -23,6 +23,7 @@ class CubitFormTextField extends StatefulWidget {
     this.hintText,
     this.isDisabled = false,
     this.onEditingComplete,
+    this.textInputAction = TextInputAction.done,
   });
 
   final FieldCubit<String> formFieldCubit;
@@ -41,6 +42,8 @@ class CubitFormTextField extends StatefulWidget {
   final int maxLines;
   final bool isDisabled;
   final VoidCallback? onEditingComplete;
+  final TextInputAction textInputAction;
+
   @override
   CubitFormTextFieldState createState() => CubitFormTextFieldState();
 }
@@ -108,7 +111,7 @@ class CubitFormTextFieldState extends State<CubitFormTextField> {
             keyboardType: widget.keyboardType,
             controller: controller,
             obscureText: widget.obscureText,
-            textInputAction: TextInputAction.done,
+            textInputAction: widget.textInputAction,
             decoration: widget.decoration.copyWith(
               prefixStyle:
                   widget.style ?? Theme.of(context).textTheme.titleMedium,

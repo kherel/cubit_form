@@ -1,13 +1,16 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../cubit_form.dart';
 
 part 'form_cubit_state.dart';
 
 abstract class FormCubit extends Cubit<FormCubitState> {
-  FormCubit() : super(_initState);
+  FormCubit({
+    this.isProtected = true,
+  }) : super(_initState);
 
   static FormCubitState _initState = FormCubitState(
     isInitial: true,
@@ -30,11 +33,6 @@ abstract class FormCubit extends Cubit<FormCubitState> {
       f.close();
     }
     await super.close();
-  }
-
-  @Deprecated('Use addFields instead.')
-  void setFields(List<FieldCubit> fields) {
-    addFields(fields);
   }
 
   void addFields(List<FieldCubit> newFields) {
@@ -97,5 +95,18 @@ abstract class FormCubit extends Cubit<FormCubitState> {
     for (var f in fields) {
       f.showError();
     }
+  }
+
+  final bool isProtected;
+
+  @override
+  emit(FormCubitState state) {
+    if (isClosed && isProtected) {
+      debugPrint('state emitted after close');
+      debugPrint(state.toString());
+      return;
+    }
+
+    super.emit(state);
   }
 }

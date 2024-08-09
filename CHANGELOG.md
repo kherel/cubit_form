@@ -1,3 +1,9 @@
+## 2.0.5
+  - add textInputAction
+
+## 2.0.4
+  - add isProtected value
+
 ## 2.0.3
   - add onEditingComplete callback
 
