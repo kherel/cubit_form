@@ -41,12 +41,15 @@ class FieldCubit<T> extends Cubit<FieldCubitState<T>> {
   void setError(String error) => emit(
         state.copyWith(
           error: error,
+          skipValidation: true,
         ),
       );
 
+  /// for dependent validation like password and confirm password
   void errorCheck() => emit(
-        state.errorCheck(
+        state.copyWith(
           error: tillfirstError<T>(state.value, validations),
+          skipValidation: false,
         ),
       );
 

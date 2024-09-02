@@ -1,3 +1,24 @@
+## 3.0.0-dev.6
+- Fixes
+
+## 3.0.0-dev.5
+- Fixes
+
+## 3.0.0-dev.4
+- Fixes
+
+## 3.0.0-dev.3
+- Fixes
+
+## 3.0.0-dev.2
+- Add tryToNextPage method
+
+## 3.0.0-dev.1
+
+- Added MultiPageFormCubit class.
+- Renamed FormCubit to SinglePageFormCubit.
+- Added skipValidation parameter to the FieldCubitState class. This parameter is useful for externally adding errors, for example, during the asynValidation process.
+
 ## 2.0.5
   - add textInputAction
 

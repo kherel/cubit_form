@@ -7,7 +7,7 @@ void main() {
   runApp(MyApp());
 }
 
-abstract class Real extends FormCubit {
+abstract class Real extends SinglePageFormCubit {
   Real() : super() {
     login = FieldCubit<String>(
       initalValue: 'Initial value',
